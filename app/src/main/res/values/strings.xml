@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ABSwapClient</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="asset_statements" translatable="false">[{ \"include\":
+        \"https://r7chakra-webapp.herokuapp.com/.well-known/assetlinks.json\" }]
+    </string>
+</resources>
