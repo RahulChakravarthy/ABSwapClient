@@ -1,11 +1,11 @@
-package tech.r7chakra.abswapclient
+package tech.r7chakra.abswapclient.activities
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import tech.r7chakra.abswapclient.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
