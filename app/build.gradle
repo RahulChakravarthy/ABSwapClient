@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -31,6 +32,99 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
 
+
     //Android Commons
     implementation 'com.github.RahulChakravarthy:AndroidCommons:1.0.0'
+
+    //Dagger 2
+    implementation 'com.google.dagger:dagger-android:2.15'
+    implementation 'com.google.dagger:dagger-android-support:2.13'
+    // if you use the support libraries
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.13'
+    kapt 'com.google.dagger:dagger-compiler:2.13'
+
+    def lifecycle_version = "1.1.1"
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+
+    //Retrofit http client and RX java stuff
+    implementation "com.squareup.retrofit2:retrofit:2.3.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.3.0"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+
+    //Butterknife
+    implementation "com.jakewharton:butterknife:$butterknife_version"
+    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    kapt 'com.github.bumptech.glide:compiler:4.7.1'
+
+    // Kotlin Please animate
+    implementation 'com.github.florent37:kotlinpleaseanimate:1.0.2'
+
+    // Elevation Image View
+    implementation 'com.qhutch.elevationimageview:elevationimageview:2.1'
+
+    // Permissions library
+    implementation 'com.karumi:dexter:5.0.0'
+
+    // Prefekt Easy way of storing in shared preferences
+    implementation 'com.pixplicity.easyprefs:library:1.9.0'
+
+    // Concealer view
+    implementation 'com.simmorsal.library:concealer_nested_scroll_view:2.0.0'
+
+    // Lottie Animation
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    // RecyclerView
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
+    // CardView
+    implementation 'com.android.support:cardview-v7:28.0.0'
+
+    def room_version = "1.1.1"
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
+
+    // Socket IO
+    implementation 'com.github.nkzawa:socket.io-client:0.3.0'
+
+    // Http logging interceptor
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+
+    // Timber Logging
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    // AWS dependencies
+    // Mobile Client for initializing the SDK
+    implementation('com.amazonaws:aws-android-sdk-mobile-client:2.7.+@aar') { transitive = true }
+
+    // Cognito UserPools for SignIn
+    implementation('com.amazonaws:aws-android-sdk-auth-userpools:2.7.+@aar') { transitive = true }
+
+    //S3 Library
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.8.4'
+
+    // Sign in UI Library
+    implementation('com.amazonaws:aws-android-sdk-auth-ui:2.7.+@aar') { transitive = true }
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // RxAndroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+}
+
+apply plugin: 'com.google.gms.google-services'
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }
