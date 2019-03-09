@@ -6,4 +6,6 @@
     <string name="asset_statements" translatable="false">[{ \"include\":
         \"https://r7chakra-webapp.herokuapp.com/.well-known/assetlinks.json\" }]
     </string>
+    <string name="post">Post</string>
+    <string name="feed">Feed</string>
 </resources>

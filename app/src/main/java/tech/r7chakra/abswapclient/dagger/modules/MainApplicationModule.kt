@@ -14,7 +14,7 @@ class MainApplicationModule(val application: Application) {
     }
 
     @Provides
-    fun contect() : Context {
+    fun context() : Context {
         return this.application
     }
 }

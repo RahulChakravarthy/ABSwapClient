@@ -3,9 +3,11 @@ package tech.r7chakra.abswapclient.dagger.components
 import android.app.Application
 import android.content.Context
 import dagger.Component
+import tech.r7chakra.abswapclient.activities.MainActivity
 import tech.r7chakra.abswapclient.dagger.modules.MainApplicationModule
 import tech.r7chakra.abswapclient.dagger.modules.ManagerModule
 import tech.r7chakra.abswapclient.dagger.modules.ViewModelModule
+import tech.r7chakra.abswapclient.fragments.MainActivityFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -15,5 +17,9 @@ interface MainApplicationComponent {
     fun context() : Context
 
     fun application() : Application
+
+    fun inject(mainActivity: MainActivity)
+
+    fun inject(mainActivity: MainActivityFragment)
 
 }
