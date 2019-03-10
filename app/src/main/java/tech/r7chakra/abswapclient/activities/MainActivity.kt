@@ -1,5 +1,6 @@
 package tech.r7chakra.abswapclient.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,6 +32,9 @@ class MainActivity : BaseActivity() {
         //For now
         fragmentManager = ApplicationFragmentManager(supportFragmentManager)
 
+        //Give viewmodel ability to start activities with result
+        mainActivityViewModel.startActivityForResultListener = { intent, requestCode, bundle -> startActivityForResult(intent, requestCode, bundle) }
+
         loadStartingFragment()
         setBottomNavBar()
 
@@ -46,5 +50,10 @@ class MainActivity : BaseActivity() {
         mainActivityViewModel.viewPagerPositionLiveData.observeForever {
             navigation.menu.getItem(it).isChecked = true
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        mainActivityViewModel.onActivityResult(requestCode, resultCode, data)
     }
 }

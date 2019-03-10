@@ -8,6 +8,7 @@ import tech.r7chakra.abswapclient.dagger.modules.MainApplicationModule
 import tech.r7chakra.abswapclient.dagger.modules.ManagerModule
 import tech.r7chakra.abswapclient.dagger.modules.ViewModelModule
 import tech.r7chakra.abswapclient.fragments.MainActivityFragment
+import tech.r7chakra.abswapclient.fragments.PostFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -21,5 +22,7 @@ interface MainApplicationComponent {
     fun inject(mainActivity: MainActivity)
 
     fun inject(mainActivity: MainActivityFragment)
+
+    fun inject(postFragment: PostFragment)
 
 }

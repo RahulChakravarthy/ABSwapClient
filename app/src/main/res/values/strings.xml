@@ -8,4 +8,8 @@
     </string>
     <string name="post">Post</string>
     <string name="feed">Feed</string>
+
+    <string name="uploadImage1">Upload Image 1</string>
+    <string name="uploadImage2">Upload Image 2</string>
+    <string name="upload_images">Upload Images!</string>
 </resources>

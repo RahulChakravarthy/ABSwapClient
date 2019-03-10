@@ -4,13 +4,57 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ImageView
+            android:id="@+id/postImage1"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@color/lightGray"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/postImage2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     <TextView
-        android:text="POST FRAGMENT"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/postImage1Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/uploadImage1"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/postImage1"
+            app:layout_constraintBottom_toBottomOf="@id/postImage1"
+    />
+
+    <ImageView
+            android:id="@+id/postImage2"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@color/lightGray"
+            app:layout_constraintTop_toBottomOf="@id/postImage1"
+            app:layout_constraintBottom_toTopOf="@id/uploadImageButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+            android:id="@+id/postImage2Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/uploadImage2"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/postImage2"
+            app:layout_constraintBottom_toBottomOf="@id/postImage2"
+    />
+
+    <Button
+            android:id="@+id/uploadImageButton"
+        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="25dp"
+        android:background="@color/lightBlue"
+        android:text="@string/upload_images"
         app:layout_constraintBottom_toBottomOf="parent"
     />
 
