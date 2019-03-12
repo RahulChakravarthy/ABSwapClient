@@ -41,7 +41,7 @@ dependencies {
 
 
     //Android Commons
-    implementation 'com.github.RahulChakravarthy:AndroidCommons:1.0.0'
+    //implementation 'com.github.RahulChakravarthy:AndroidCommons:1.0.0'
 
     //Dagger 2
     implementation 'com.google.dagger:dagger-android:2.15'

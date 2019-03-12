@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.squareup.picasso.Picasso
@@ -33,6 +34,7 @@ class PostFragment : BaseFragment() {
         MainApplication.mainApplicationComponent.inject(this)
         onUploadImage1Clicked()
         onUploadImage2Clicked()
+        onUploadImagesClicked()
     }
 
     private fun onUploadImage1Clicked() {
@@ -61,5 +63,20 @@ class PostFragment : BaseFragment() {
                 .into(postImage2)
             postImage2Text.visibility = View.GONE
         })
+    }
+
+    private fun onUploadImagesClicked() {
+        uploadImageButton.setOnClickListener {
+            //Verify that there are 2 images to upload
+            if (mainActivityViewModel.image1UriLiveData.value != null && mainActivityViewModel.image2UriLiveData.value != null) {
+                mainActivityViewModel.uploadImages()
+                //Show loading screen
+                loadingLottie.visibility = View.VISIBLE
+                loadingLottie.playAnimation()
+            } else {
+                Toast.makeText(requireContext(), "Please upload 2 photos", Toast.LENGTH_SHORT).show()
+            }
+
+        }
     }
 }

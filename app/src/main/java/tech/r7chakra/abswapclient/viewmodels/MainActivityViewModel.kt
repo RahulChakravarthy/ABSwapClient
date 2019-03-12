@@ -116,4 +116,8 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
         }
 
     }
+
+    fun uploadImages() {
+        //
+    }
 }
