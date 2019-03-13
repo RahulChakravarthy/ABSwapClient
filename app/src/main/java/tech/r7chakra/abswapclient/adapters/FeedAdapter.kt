@@ -1,27 +1,33 @@
 package tech.r7chakra.abswapclient.adapters
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import tech.r7chakra.abswapclient.R
+import tech.r7chakra.abswapclient.repo.dataobject.FeedDO
+import tech.r7chakra.abswapclient.views.PercentageFilterView
 
-class FeedAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FeedAdapter(val list : ArrayList<FeedDO>, val context : Context) : RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
 
-
-
-    class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-
+    class ViewHolder(private val view : View) : RecyclerView.ViewHolder(view) {
+        val percentageFilterView1 = view.findViewById<PercentageFilterView>(R.id.percentageView1)
+        val percentageFilterView2 = view.findViewById<PercentageFilterView>(R.id.percentageView2)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedAdapter.ViewHolder {
+        val itemView = LayoutInflater.from(context).inflate(R.layout.adapter_feed_view, parent, false)
+        return ViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
-        return 0
+        return list.size
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
+    override fun onBindViewHolder(holder: FeedAdapter.ViewHolder, position: Int) {
+        holder.percentageFilterView1.setMainBackgroundImage(list[position].image1Url)
+        holder.percentageFilterView2.setMainBackgroundImage(list[position].image2Url)
     }
 
 }

@@ -7,4 +7,6 @@ import javax.inject.Singleton
 
 @Singleton
 class APIManager @Inject constructor(private val retrofitManager: RetrofitManager){
+
+
 }

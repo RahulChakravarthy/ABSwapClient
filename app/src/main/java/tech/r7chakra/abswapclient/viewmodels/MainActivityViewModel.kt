@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -37,11 +38,15 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
     }
 
     val image1UriLiveData by lazyAndroid {
-        MutableLiveData<Uri>()
+        MediatorLiveData<Uri>().apply {
+            value = Uri.EMPTY
+        }
     }
 
     val image2UriLiveData by lazyAndroid {
-        MutableLiveData<Uri>()
+        MediatorLiveData<Uri>().apply {
+            value = Uri.EMPTY
+        }
     }
 
     init {

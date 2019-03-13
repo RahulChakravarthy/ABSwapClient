@@ -5,11 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_feed.*
 import tech.r7chakra.abswapclient.R
-import tech.r7chakra.abswapclient.adapters.FeedAdapter
 import tech.r7chakra.abswapclient.util.lazyAndroid
 import tech.r7chakra.abswapclient.viewmodels.MainActivityViewModel
 import tech.r7chakra.abswapclient.viewmodels.MainViewModelFactory
@@ -30,20 +26,22 @@ class FeedFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupRecyclerView()
+        //setupRecyclerView()
     }
 
     override fun onResume() {
         super.onResume()
-        updateRecyclerView()
+        //updateRecyclerView()
     }
 
-    private fun setupRecyclerView() {
-        feedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-        updateRecyclerView()
-    }
+//    private fun setupRecyclerView() {
+//        feedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+//        updateRecyclerView()
+//    }
+//
+//    private fun updateRecyclerView() {
+//        feedRecyclerView.adapter = FeedAdapter()
+//    }
 
-    private fun updateRecyclerView() {
-        feedRecyclerView.adapter = FeedAdapter()
-    }
+
 }
