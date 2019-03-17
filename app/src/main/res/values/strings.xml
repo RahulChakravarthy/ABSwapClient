@@ -12,5 +12,5 @@
     <string name="uploadImage1">Upload Image 1</string>
     <string name="uploadImage2">Upload Image 2</string>
     <string name="upload_images">Upload Images!</string>
-    <string name="host_name">\"http://ec2-18-219-73-245.us-east-2.compute.amazonaws.com:5000/\"</string>
+    <string name="host_name">http://ec2–18–219–73–245.us-east-2.compute.amazonaws.com:5000/</string>
 </resources>

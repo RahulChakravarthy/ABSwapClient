@@ -7,6 +7,7 @@ import tech.r7chakra.abswapclient.activities.MainActivity
 import tech.r7chakra.abswapclient.dagger.modules.MainApplicationModule
 import tech.r7chakra.abswapclient.dagger.modules.ManagerModule
 import tech.r7chakra.abswapclient.dagger.modules.ViewModelModule
+import tech.r7chakra.abswapclient.fragments.FeedFragment
 import tech.r7chakra.abswapclient.fragments.MainActivityFragment
 import tech.r7chakra.abswapclient.fragments.PostFragment
 import javax.inject.Singleton
@@ -24,5 +25,7 @@ interface MainApplicationComponent {
     fun inject(mainActivity: MainActivityFragment)
 
     fun inject(postFragment: PostFragment)
+
+    fun inject(feedFragment: FeedFragment)
 
 }

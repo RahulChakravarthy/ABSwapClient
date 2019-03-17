@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import tech.r7chakra.abswapclient.R
+import tech.r7chakra.abswapclient.activities.MainApplication
 import tech.r7chakra.abswapclient.util.lazyAndroid
 import tech.r7chakra.abswapclient.viewmodels.MainActivityViewModel
 import tech.r7chakra.abswapclient.viewmodels.MainViewModelFactory
@@ -26,12 +27,13 @@ class FeedFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        MainApplication.mainApplicationComponent.inject(this)
         //setupRecyclerView()
     }
 
     override fun onResume() {
         super.onResume()
-        mainActivityViewModel.fetchImages(3)
+        //mainActivityViewModel.fetchImages(3)
         //updateRecyclerView()
     }
 
