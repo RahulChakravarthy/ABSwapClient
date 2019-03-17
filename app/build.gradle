@@ -7,7 +7,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "tech.r7chakra.abswapclient"
+        applicationId "com.hacks.radish"
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 4
@@ -58,7 +58,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.3.0"
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
     implementation "com.squareup.retrofit2:converter-gson:2.3.0"
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'
@@ -93,9 +93,6 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
     kapt "android.arch.persistence.room:compiler:$room_version"
 
-    // Socket IO
-    implementation 'com.github.nkzawa:socket.io-client:0.3.0'
-
     // Http logging interceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 
@@ -105,9 +102,6 @@ dependencies {
     // AWS dependencies
     // Mobile Client for initializing the SDK
     implementation('com.amazonaws:aws-android-sdk-mobile-client:2.7.+@aar') { transitive = true }
-
-    // Cognito UserPools for SignIn
-    implementation('com.amazonaws:aws-android-sdk-auth-userpools:2.7.+@aar') { transitive = true }
 
     //S3 Library
     implementation 'com.amazonaws:aws-android-sdk-s3:2.8.4'
@@ -120,9 +114,6 @@ dependencies {
 
     //Gson
     implementation 'com.google.code.gson:gson:2.8.5'
-
-    // RxAndroid
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     //Lottie Navigation Bar
     implementation 'com.github.wwdablu:lottiebottomnav:1.0.0'
