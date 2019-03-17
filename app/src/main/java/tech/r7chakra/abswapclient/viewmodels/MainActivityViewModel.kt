@@ -14,13 +14,16 @@ import tech.r7chakra.abswapclient.fragments.BaseFragment
 import tech.r7chakra.abswapclient.fragments.FeedFragment
 import tech.r7chakra.abswapclient.fragments.PostFragment
 import tech.r7chakra.abswapclient.managers.MenuManager
+import tech.r7chakra.abswapclient.repo.api.APIManager
+import tech.r7chakra.abswapclient.repo.dataobject.FeedDO
 import tech.r7chakra.abswapclient.util.lazyAndroid
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class MainActivityViewModel @Inject constructor(private val context : Context,
-                                                private val menuManager: MenuManager) : BaseViewModel() {
+                                                private val menuManager: MenuManager,
+                                                private val apiManager: APIManager) : BaseViewModel() {
 
     companion object {
         const val UPLOAD_IMAGE_1_REQUEST_CODE = 10
@@ -48,6 +51,11 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
             value = Uri.EMPTY
         }
     }
+
+    val feedListLiveData by lazyAndroid {
+        MutableLiveData<List<FeedDO>>()
+    }
+
 
     init {
         dashboardFragments.add(PostFragment())
@@ -124,5 +132,11 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
 
     fun uploadImages() {
         //
+    }
+
+    fun fetchImages(size : Int) {
+        apiManager.getFeed(size) {
+            feedListLiveData.value = it
+        }
     }
 }

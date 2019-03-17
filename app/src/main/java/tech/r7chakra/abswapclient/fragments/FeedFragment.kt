@@ -31,6 +31,7 @@ class FeedFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        mainActivityViewModel.fetchImages(3)
         //updateRecyclerView()
     }
 
