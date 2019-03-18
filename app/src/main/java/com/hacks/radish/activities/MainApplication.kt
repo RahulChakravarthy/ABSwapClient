@@ -21,7 +21,6 @@ class MainApplication : Application() {
             DaggerMainApplicationComponent
                 .builder()
                 .mainApplicationModule(MainApplicationModule(this))
-                .managerModule(ManagerModule(this))
                 .build()
     }
 }

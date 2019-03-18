@@ -2,10 +2,11 @@ package com.hacks.radish.managers
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SharedPreferencesManager (val context: Context) {
+class SharedPreferencesManager @Inject constructor(val context: Context) {
     companion object {
         const val SHARED_PREFS_NAME = "ABSwapClient_Default"
     }
