@@ -4,6 +4,7 @@ import android.app.Application
 import com.hacks.radish.dagger.components.DaggerMainApplicationComponent
 import com.hacks.radish.dagger.components.MainApplicationComponent
 import com.hacks.radish.dagger.modules.MainApplicationModule
+import com.hacks.radish.dagger.modules.ManagerModule
 
 class MainApplication : Application() {
 
@@ -20,6 +21,7 @@ class MainApplication : Application() {
             DaggerMainApplicationComponent
                 .builder()
                 .mainApplicationModule(MainApplicationModule(this))
+                .managerModule(ManagerModule(this))
                 .build()
     }
 }
