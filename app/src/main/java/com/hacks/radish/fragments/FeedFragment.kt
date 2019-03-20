@@ -28,23 +28,5 @@ class FeedFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         MainApplication.mainApplicationComponent.inject(this)
-        //setupRecyclerView()
     }
-
-    override fun onResume() {
-        super.onResume()
-        //mainActivityViewModel.fetchImages(3)
-        //updateRecyclerView()
-    }
-
-//    private fun setupRecyclerView() {
-//        feedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-//        updateRecyclerView()
-//    }
-//
-//    private fun updateRecyclerView() {
-//        feedRecyclerView.adapter = FeedAdapter()
-//    }
-
-
 }

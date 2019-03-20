@@ -11,37 +11,11 @@
     <FrameLayout
             android:id="@+id/mainActivityFrameLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/navigation"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mainActivityFrameLayout"
-            app:menu="@menu/navigation"/>
-
-    <!--<com.wwdablu.soumya.lottiebottomnav.LottieBottomNav
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground"
-            app:menu_selected_height="48dp"
-            app:menu_selected_width="48dp"
-            app:menu_unselected_height="40dp"
-            app:menu_unselected_width="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:menu_text_show_on_unselected="true"
-            app:menu="@menu/navigation"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
