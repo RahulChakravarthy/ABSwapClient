@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import com.hacks.radish.R
+import com.hacks.radish.fragments.FeedFragment
 import com.hacks.radish.managers.ApplicationFragmentManager
 import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.viewmodels.MainActivityViewModel
@@ -32,6 +33,7 @@ class MainActivity : BaseActivity() {
         //Give viewmodel ability to start activities with result
         mainActivityViewModel.startActivityForResultListener = { intent, requestCode, bundle -> startActivityForResult(intent, requestCode, bundle) }
 
+        fragmentManager.loadInitialFragment(R.id.mainActivityFrameLayout, FeedFragment())
     }
 
 

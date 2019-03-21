@@ -17,6 +17,7 @@ class SplitImageView @JvmOverloads constructor(
         const val CUT_LEFT = 0
         const val CUT_RIGHT = 1
     }
+
     var cutSide: Int by Delegates.observable(CUT_LEFT) { _, old, new ->
         if (old != new) {
             invalidate()
@@ -26,19 +27,34 @@ class SplitImageView @JvmOverloads constructor(
     var cutPercentage: Int by Delegates.observable(50) { _, old, new ->
         if (old != new) {
             invalidate()
+            updatePadding()
         }
     }
+
+    private val cutWidth: Float
+        get() = height.toFloat() / 2
+
+    private val cutRatio: Float
+        get() = when {
+            cutPercentage < 25 -> 25
+            cutPercentage > 75 -> 75
+            else -> cutPercentage
+        } / 100f
+
+    private val cutLocation: Float
+        get() = cutRatio * width
 
     private val clearPaint = Paint(ANTI_ALIAS_FLAG)
     private val cutPath = Path()
 
     init{
+        adjustViewBounds = true
+        scaleType = ScaleType.CENTER_CROP
+
         clearPaint.color = ContextCompat.getColor(context, android.R.color.black)
         clearPaint.style = Paint.Style.FILL
         clearPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-    }
 
-    init {
         //In versions > 3.0 need to define layer Type
         if (android.os.Build.VERSION.SDK_INT >= 11)
         {
@@ -46,16 +62,14 @@ class SplitImageView @JvmOverloads constructor(
         }
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        updatePadding()
+    }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        val cutWidth = height.toFloat() / 2
-        val cutRatio = when {
-            cutPercentage < 25 -> 25
-            cutPercentage > 75 -> 75
-            else -> cutPercentage
-        } / 100f
-        val cutLocation = cutRatio * width
+
         cutPath.reset()
         if (cutSide == CUT_LEFT) {
             cutPath.moveTo(0f, 0f)
@@ -73,5 +87,15 @@ class SplitImageView @JvmOverloads constructor(
         cutPath.close()
 
         canvas?.drawPath(cutPath, clearPaint)
+    }
+
+    private fun updatePadding() {
+        if (cutSide == CUT_RIGHT) {
+            val padRight = width - (cutLocation + cutWidth / 2)
+            setPadding(0,0, padRight.toInt(), 0)
+        } else {
+            val padLeft = cutLocation - cutWidth / 2
+            setPadding(padLeft.toInt(), 0,0,0)
+        }
     }
 }

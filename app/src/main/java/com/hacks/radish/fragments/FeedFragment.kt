@@ -10,6 +10,7 @@ import com.hacks.radish.activities.MainApplication
 import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.viewmodels.MainActivityViewModel
 import com.hacks.radish.viewmodels.MainViewModelFactory
+import kotlinx.android.synthetic.main.fragment_feed.*
 import javax.inject.Inject
 
 class FeedFragment : BaseFragment() {
@@ -28,5 +29,10 @@ class FeedFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         MainApplication.mainApplicationComponent.inject(this)
+        //setupRecyclerView()
+        feedCard.setTitle("Starry Nights")
+        feedCard.setCreator("Edwin \"Yiu Ting\" Lo")
+        feedCard.setImageAUrl("https://i.imgur.com/AmWThvw.jpg")
+        feedCard.setImageBUrl("https://i.imgur.com/5on032B.jpg")
     }
 }

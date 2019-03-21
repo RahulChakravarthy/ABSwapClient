@@ -45,7 +45,7 @@ class PostFragment : BaseFragment() {
         }
         mainActivityViewModel.image1UriLiveData.observe(this, Observer {
             if (it != Uri.EMPTY) {
-                Picasso.with(requireActivity())
+                Picasso.get()
                     .load(it.toString())
                     .centerCrop()
                     .fit()
@@ -69,7 +69,7 @@ class PostFragment : BaseFragment() {
         }
         mainActivityViewModel.image2UriLiveData.observe(this, Observer {
             if (it != Uri.EMPTY) {
-                Picasso.with(requireContext())
+                Picasso.get()
                     .load(it)
                     .centerCrop()
                     .fit()
