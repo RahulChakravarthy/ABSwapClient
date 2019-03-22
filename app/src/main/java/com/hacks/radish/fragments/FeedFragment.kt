@@ -10,8 +10,11 @@ import com.hacks.radish.activities.MainApplication
 import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.viewmodels.MainActivityViewModel
 import com.hacks.radish.viewmodels.MainViewModelFactory
+import com.hacks.radish.views.FeedCardView
 import kotlinx.android.synthetic.main.fragment_feed.*
+import java.util.*
 import javax.inject.Inject
+import kotlin.concurrent.schedule
 
 class FeedFragment : BaseFragment() {
 
@@ -30,9 +33,25 @@ class FeedFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         MainApplication.mainApplicationComponent.inject(this)
         //setupRecyclerView()
-        feedCard.setTitle("Starry Nights")
-        feedCard.setCreator("Edwin \"Yiu Ting\" Lo")
-        feedCard.setImageAUrl("https://i.imgur.com/AmWThvw.jpg")
-        feedCard.setImageBUrl("https://i.imgur.com/5on032B.jpg")
+
+        //Example usage of FeedCardView
+        val model = FeedCardView.RenderModel(
+            "Starry Nights",
+            "Edwin \"Yiu Ting\" Lo",
+            listOf(),
+            FeedCardView.RenderModel.Image("https://i.imgur.com/AmWThvw.jpg", 100),
+            FeedCardView.RenderModel.Image("https://i.imgur.com/5on032B.jpg", 200))
+        feedCard.render(model)
+        Timer().schedule(1000) {
+            activity?.runOnUiThread {
+                feedCard.setState(FeedCardView.Companion.State.SHOW_PERCENTAGE)
+            }
+        }
+        Timer().schedule(2000) {
+            activity?.runOnUiThread {
+                feedCard.setState(FeedCardView.Companion.State.DEFAULT)
+            }
+        }
+
     }
 }
