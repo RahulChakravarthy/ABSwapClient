@@ -1,5 +1,6 @@
 package com.hacks.radish.views
 
+import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
@@ -15,6 +16,31 @@ import kotlinx.android.synthetic.main.view_feed_card.view.*
 class FeedCardView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
+
+    companion object {
+        enum class State {
+            DEFAULT,
+            SHOW_PERCENTAGE
+        }
+    }
+    data class RenderModel(val title: String,
+                           val creator: String,
+                           val tags: List<RenderModel.Tag>,
+                           val imageA: RenderModel.Image,
+                           val imageB: RenderModel.Image) {
+        data class Image(val url: String, val votes: Long)
+        data class Tag(val name: String)
+    }
+
+    private var model: RenderModel = RenderModel(
+        title = "",
+        creator = "",
+        tags = listOf(),
+        imageA = RenderModel.Image("", 0),
+        imageB = RenderModel.Image("", 0))
+
+    private var state: State = Companion.State.DEFAULT
+
     private var cutPercentage: Int = 50
         set(value) {
             field = value
@@ -33,9 +59,9 @@ class FeedCardView @JvmOverloads constructor(
         image_left.cutSide = CUT_RIGHT
     }
 
-    fun animateCutTo(newImageAWeight: Int) {
+    private fun animateCutPercentage(imageAPercentage: Int) {
         imageCutAnimator?.cancel()
-        val parsedWeight = Math.max(Math.min(newImageAWeight, 75), 25)
+        val parsedWeight = Math.max(Math.min(imageAPercentage, 75), 25)
         imageCutAnimator = ValueAnimator.ofInt(cutPercentage, parsedWeight)
         imageCutAnimator?.let {
             it.interpolator = AccelerateDecelerateInterpolator()
@@ -47,20 +73,54 @@ class FeedCardView @JvmOverloads constructor(
         }
     }
 
-    fun setImageAUrl(url: String) {
-        Picasso.get().load(url).into(image_left)
+    fun render(model: RenderModel) {
+        if (this.model != model) {
+            this.model = model
+            render()
+        }
     }
 
-    fun setImageBUrl(url: String) {
-        Picasso.get().load(url).into(image_right)
+    fun setState(state: State, allowAnimations: Boolean = true) {
+        val oldState = this.state
+        this.state = state
+        return when(state) {   //Ensures that the when statement is exhaustive
+            Companion.State.DEFAULT -> setStateDefault(animate = when(oldState) {
+                Companion.State.DEFAULT -> false
+                Companion.State.SHOW_PERCENTAGE -> true
+            } and allowAnimations)
+            Companion.State.SHOW_PERCENTAGE -> setStateShowPercentage(animate = when(oldState) {
+                Companion.State.DEFAULT -> true
+                Companion.State.SHOW_PERCENTAGE -> false
+            } and allowAnimations)
+        }
     }
 
-    fun setTitle(text: String) {
-        title.text = text
+    private fun setStateDefault(animate: Boolean) {
+        if (animate) {
+            animateCutPercentage(50)
+        } else {
+            cutPercentage = 50
+        }
     }
 
-    fun setCreator(text: String) {
-        creator.text = text
+    private fun setStateShowPercentage(animate: Boolean) {
+        val percentage = if (model.imageA.votes == 0L && model.imageB.votes == 0L) {
+            50
+        } else {
+            (model.imageA.votes / (model.imageB.votes + model.imageA.votes)).toInt()
+        }
+        if (animate) {
+            animateCutPercentage(percentage)
+        } else {
+            cutPercentage = percentage
+        }
+    }
+
+    private fun render() {
+        Picasso.get().load(model.imageA.url).into(image_left)
+        Picasso.get().load(model.imageB.url).into(image_right)
+        title.text = model.title
+        creator.text = model.creator
     }
 
     override fun setOnClickListener(l: OnClickListener?) {
