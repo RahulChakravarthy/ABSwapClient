@@ -21,7 +21,7 @@ class FeedFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: MainViewModelFactory
 
-    val mainActivityViewModel : MainActivityViewModel by lazyAndroid {
+    val mainActivityViewModel: MainActivityViewModel by lazyAndroid {
         ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
     }
 
@@ -38,9 +38,12 @@ class FeedFragment : BaseFragment() {
         val model = FeedCardView.RenderModel(
             "Starry Nights",
             "Edwin \"Yiu Ting\" Lo",
-            listOf(),
+            listOf("Night", "Stars", "Nature").map {
+                FeedCardView.RenderModel.Tag(it)
+            },
             FeedCardView.RenderModel.Image("https://i.imgur.com/AmWThvw.jpg", 100),
-            FeedCardView.RenderModel.Image("https://i.imgur.com/5on032B.jpg", 200))
+            FeedCardView.RenderModel.Image("https://i.imgur.com/5on032B.jpg", 200)
+        )
         feedCard.render(model)
         Timer().schedule(1000) {
             activity?.runOnUiThread {
@@ -52,6 +55,5 @@ class FeedFragment : BaseFragment() {
                 feedCard.setState(FeedCardView.Companion.State.DEFAULT)
             }
         }
-
     }
 }

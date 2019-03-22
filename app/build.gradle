@@ -126,6 +126,13 @@ dependencies {
     //Camera Kit
     implementation 'com.camerakit:camerakit:1.0.0-beta3.10'
     implementation 'com.camerakit:jpegkit:0.1.0'
+
+    //FlexBoxLayout
+    implementation 'com.google.android:flexbox:1.1.0'
+
+    //Annotations
+    implementation 'com.android.support:support-annotations:28.0.0'
+
 }
 
 kotlin {

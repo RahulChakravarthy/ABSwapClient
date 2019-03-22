@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:padding="4dp"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+    <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cardCornerRadius="100dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            app:cardElevation="2dp">
+        <TextView
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:selectableItemBackground"
+                android:id="@+id/text"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:text="Test"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp">
+        </TextView>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

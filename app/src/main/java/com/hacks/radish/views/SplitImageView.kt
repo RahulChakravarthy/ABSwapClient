@@ -51,6 +51,8 @@ class SplitImageView @JvmOverloads constructor(
         adjustViewBounds = true
         scaleType = ScaleType.CENTER_CROP
 
+        updatePadding()
+
         clearPaint.color = ContextCompat.getColor(context, android.R.color.black)
         clearPaint.style = Paint.Style.FILL
         clearPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)

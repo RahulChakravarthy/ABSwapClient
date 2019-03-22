@@ -1,16 +1,18 @@
 package com.hacks.radish.views
 
-import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.FrameLayout
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import com.hacks.radish.R
 import com.hacks.radish.views.SplitImageView.Companion.CUT_LEFT
 import com.hacks.radish.views.SplitImageView.Companion.CUT_RIGHT
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.tag.view.*
 import kotlinx.android.synthetic.main.view_feed_card.view.*
 
 class FeedCardView @JvmOverloads constructor(
@@ -23,6 +25,7 @@ class FeedCardView @JvmOverloads constructor(
             SHOW_PERCENTAGE
         }
     }
+
     data class RenderModel(val title: String,
                            val creator: String,
                            val tags: List<RenderModel.Tag>,
@@ -117,11 +120,26 @@ class FeedCardView @JvmOverloads constructor(
     }
 
     private fun render() {
+        fun newTagView(text: String, @ColorRes backgroundColor: Int = android.R.color.white, @ColorRes textColor: Int? = null): View {
+            val tagView = View.inflate(context, R.layout.tag, null)
+            tagView.text.text = text
+            tagView.text.setBackgroundColor(ContextCompat.getColor(context, backgroundColor))
+            textColor?.let {
+                tagView.text.setTextColor(ContextCompat.getColor(context, textColor))
+            }
+            return tagView
+        }
+
+        tags_container.removeAllViews()
         Picasso.get().load(model.imageA.url).into(image_left)
         Picasso.get().load(model.imageB.url).into(image_right)
         title.text = model.title
-        creator.text = model.creator
+        tags_container.addView(newTagView(model.creator, android.R.color.black, android.R.color.white))
+        model.tags.forEach { tag ->
+            tags_container.addView(newTagView(tag.name))
+        }
     }
+
 
     override fun setOnClickListener(l: OnClickListener?) {
         constraint_root.setOnClickListener(l)
