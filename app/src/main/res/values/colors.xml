@@ -7,4 +7,6 @@
     <color name="lightGray">#e8e5e5</color>
     <color name="lightGrayTransparent">#40E8E5E5</color>
     <color name="lightBlue">#4286f4</color>
+
+    <color name="salmon">#FF6363</color>
 </resources>
