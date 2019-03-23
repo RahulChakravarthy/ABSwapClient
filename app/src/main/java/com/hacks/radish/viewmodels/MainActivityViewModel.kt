@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.viewpager.widget.ViewPager
@@ -60,6 +61,13 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
     init {
         dashboardFragments.add(PostFragment())
         dashboardFragments.add(FeedFragment())
+    }
+
+    fun onOptionsItemSelected(item: MenuItem?) : Boolean {
+        when (item?.itemId) {
+            R.id.uploadMenuIcon -> { /* Do Upload Item logic */}
+        }
+        return true
     }
 
     fun getNavigationBarListener() : BottomNavigationView.OnNavigationItemSelectedListener {

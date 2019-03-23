@@ -34,8 +34,9 @@ class MainActivity : BaseActivity() {
         mainActivityViewModel.startActivityForResultListener = { intent, requestCode, bundle -> startActivityForResult(intent, requestCode, bundle) }
 
         fragmentManager.loadInitialFragment(R.id.mainActivityFrameLayout, FeedFragment())
-    }
 
+
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
