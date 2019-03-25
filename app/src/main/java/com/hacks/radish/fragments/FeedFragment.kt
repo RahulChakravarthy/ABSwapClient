@@ -4,17 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.hacks.radish.R
 import com.hacks.radish.activities.MainApplication
+import com.hacks.radish.adapters.FeedAdapter
+import com.hacks.radish.repo.dataobject.FeedDO
 import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.viewmodels.MainActivityViewModel
 import com.hacks.radish.viewmodels.MainViewModelFactory
-import com.hacks.radish.views.FeedCardView
 import kotlinx.android.synthetic.main.fragment_feed.*
-import java.util.*
 import javax.inject.Inject
-import kotlin.concurrent.schedule
 
 class FeedFragment : BaseFragment() {
 
@@ -25,6 +27,8 @@ class FeedFragment : BaseFragment() {
         ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
     }
 
+    var feedAdapter : FeedAdapter? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_feed, container, false)
     }
@@ -32,29 +36,22 @@ class FeedFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         MainApplication.mainApplicationComponent.inject(this)
-        //setupRecyclerView()
+        observeFeedItems()
+    }
 
-        //Example usage of FeedCardView
-        val model = FeedCardView.RenderModel(
-            "Starry Nights",
-            "Edwin \"Yiu Ting\" Lo",
-            listOf("Night", "Stars", "Nature").map {
-                FeedCardView.RenderModel.Tag(it)
-            },
-            FeedCardView.RenderModel.Image("https://i.imgur.com/AmWThvw.jpg", 300),
-            FeedCardView.RenderModel.Image("https://i.imgur.com/5on032B.jpg", 200)
-        )
-        feedCard.render(model)
-        var showPercentage = true
-        feedCard.setOnClickListener {
-            if (showPercentage) {
-                feedCard.setState(FeedCardView.Companion.State.SHOW_PERCENTAGE)
+    private fun observeFeedItems() {
+        mainActivityViewModel.feedListLiveData.observe(this, Observer {
+            if (feedAdapter == null) {
+                setupRecyclerView(it)
             } else {
-                feedCard.setState(FeedCardView.Companion.State.DEFAULT)
+                feedAdapter?.list = it
             }
+        })
+        mainActivityViewModel.fetchNewFeed(5) //Fetch a new feed
+    }
 
-            showPercentage = !showPercentage
-        }
-
+    private fun setupRecyclerView(list : ArrayList<FeedDO>) {
+        feedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        feedRecyclerView.adapter = FeedAdapter(list, requireContext())
     }
 }

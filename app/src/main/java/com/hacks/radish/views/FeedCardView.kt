@@ -5,7 +5,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import androidx.annotation.ColorRes
@@ -13,13 +12,14 @@ import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import com.hacks.radish.R
+import com.hacks.radish.repo.dataobject.RenderModelDO
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.tag.view.*
+import kotlinx.android.synthetic.main.view_feed_card.view.*
 import com.hacks.radish.util.fadeIn
 import com.hacks.radish.util.fadeOut
 import com.hacks.radish.views.CutView.Companion.CUT_LEFT
 import com.hacks.radish.views.CutView.Companion.CUT_RIGHT
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.tag.view.*
-import kotlinx.android.synthetic.main.view_feed_card.view.*
 
 class FeedCardView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -32,21 +32,12 @@ class FeedCardView @JvmOverloads constructor(
         }
     }
 
-    data class RenderModel(val title: String,
-                           val creator: String,
-                           val tags: List<RenderModel.Tag>,
-                           val imageA: RenderModel.Image,
-                           val imageB: RenderModel.Image) {
-        data class Image(val url: String, val votes: Long)
-        data class Tag(val name: String)
-    }
-
-    private var model: RenderModel = RenderModel(
+    private var model: RenderModelDO = RenderModelDO(
         title = "",
         creator = "",
         tags = listOf(),
-        imageA = RenderModel.Image("", 0),
-        imageB = RenderModel.Image("", 0))
+        imageA = RenderModelDO.Image("", 0),
+        imageB = RenderModelDO.Image("", 0))
 
     private var state: State = Companion.State.DEFAULT
 
@@ -100,7 +91,7 @@ class FeedCardView @JvmOverloads constructor(
         return cutWidthAnimator
     }
 
-    fun render(model: RenderModel) {
+    fun render(model: RenderModelDO) {
         if (this.model != model) {
             this.model = model
             render()

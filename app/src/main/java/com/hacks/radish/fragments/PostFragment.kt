@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_post.*
 import com.hacks.radish.R
 import com.hacks.radish.activities.MainApplication
 import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.viewmodels.MainActivityViewModel
 import com.hacks.radish.viewmodels.MainViewModelFactory
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_post.*
 import javax.inject.Inject
 
 
@@ -91,7 +91,7 @@ class PostFragment : BaseFragment() {
         uploadImageButton.setOnClickListener {
             //Verify that there are 2 images to upload
             if (mainActivityViewModel.image1UriLiveData.value != Uri.EMPTY && mainActivityViewModel.image2UriLiveData.value != Uri.EMPTY) {
-                mainActivityViewModel.uploadImages()
+                //mainActivityViewModel.uploadImages()
                 //Show loading screen
                 loadingLottie.visibility = View.VISIBLE
                 loadingLottie.playAnimation()

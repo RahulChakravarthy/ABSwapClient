@@ -1,17 +1,13 @@
 package com.hacks.radish.repo.dataaccessobject.user
 
 import android.content.Context
-import androidx.room.Room
-import com.hacks.radish.repo.dataaccessobject.ApplicationDatabase
 import com.hacks.radish.repo.dataaccessobject.BaseTable
-import com.hacks.radish.repo.dataaccessobject.DatabaseOperationInterface
-import com.hacks.radish.repo.dataobject.UserDO
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class UserTable @Inject constructor(private val context : Context) : BaseTable(context) {
-
+    /*
     private val applicationDatabase : ApplicationDatabase
     private val dao : UserDataAccessObject
     private val databaseName = "UserDB"
@@ -70,5 +66,5 @@ class UserTable @Inject constructor(private val context : Context) : BaseTable(c
         }
     }
 
-
+    */
 }

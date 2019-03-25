@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.hacks.radish.R
 import com.hacks.radish.fragments.BaseFragment
 import com.hacks.radish.fragments.FeedFragment
@@ -34,19 +32,11 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
     lateinit var startActivityForResultListener : (intent : Intent, requestCode : Int, bundle : Bundle?) -> Unit
 
     val dashboardFragments : ArrayList<BaseFragment> by lazyAndroid { ArrayList<BaseFragment>() }
-
-    val viewPagerPositionLiveData by lazyAndroid {
-        MutableLiveData<Int>().apply {
-            value = 0
-        }
-    }
-
     val image1UriLiveData by lazyAndroid {
         MediatorLiveData<Uri>().apply {
             value = Uri.EMPTY
         }
     }
-
     val image2UriLiveData by lazyAndroid {
         MediatorLiveData<Uri>().apply {
             value = Uri.EMPTY
@@ -54,13 +44,19 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
     }
 
     val feedListLiveData by lazyAndroid {
-        MutableLiveData<List<FeedDO>>()
+        MutableLiveData<ArrayList<FeedDO>>()
     }
-
 
     init {
         dashboardFragments.add(PostFragment())
         dashboardFragments.add(FeedFragment())
+    }
+
+    fun fetchNewFeed(size : Int) {
+//        apiManager.getFeed(size) {
+//            feedListLiveData.value = it
+//        }
+        feedListLiveData.value = Array(5) {FeedDO.generateTestFeedDO()}.toCollection(ArrayList())
     }
 
     fun onOptionsItemSelected(item: MenuItem?) : Boolean {
@@ -68,37 +64,6 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
             R.id.uploadMenuIcon -> { /* Do Upload Item logic */}
         }
         return true
-    }
-
-    fun getNavigationBarListener() : BottomNavigationView.OnNavigationItemSelectedListener {
-        return BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_upload -> {
-                    viewPagerPositionLiveData.value = 0
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.navigation_feed -> {
-                    viewPagerPositionLiveData.value = 1
-                    return@OnNavigationItemSelectedListener true
-                }
-                else -> return@OnNavigationItemSelectedListener false
-            }
-        }
-    }
-
-    fun getOnPageChangeListener(): ViewPager.OnPageChangeListener {
-        return object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                viewPagerPositionLiveData.value = position
-            }
-
-        }
     }
 
     fun onUploadImage1Clicked() {
@@ -134,17 +99,6 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
             }
         } else {
             /* Activity result is not valid */
-        }
-
-    }
-
-    fun uploadImages() {
-        //
-    }
-
-    fun fetchImages(size : Int) {
-        apiManager.getFeed(size) {
-            feedListLiveData.value = it
         }
     }
 }

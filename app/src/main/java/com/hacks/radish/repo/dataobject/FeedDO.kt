@@ -1,43 +1,34 @@
 package com.hacks.radish.repo.dataobject
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import com.hacks.radish.util.lazyAndroid
 import java.io.Serializable
 
 
-@Entity(tableName = "FeedDO")
-data class FeedDO(//@ColumnInfo(name = "userDO") val userDO: UserDO,
-                  @ColumnInfo(name = "image1Url")
-                  @SerializedName("a_url")
-                  @Expose
-                  val image1Url : String,
-                  @ColumnInfo(name = "image2Url")
-                  @SerializedName("a_url")
-                  @Expose
-                  val image2Url : String) : DataObject(), Serializable {
+//@Entity(tableName = "FeedDO")
+data class FeedDO(val title: String,
+                  val creator: String,
+                  val tags: List<RenderModelDO.Tag>,
+                  val imageA: RenderModelDO.Image,
+                  val imageB: RenderModelDO.Image
+                  ) : DataObject(), Serializable {
 
     @PrimaryKey(autoGenerate = true) var id : Long? = null
 
-    override fun equals(other: Any?): Boolean {
-        return if (other is FeedDO) {
-            val that : FeedDO = other
-            this.id == that.id &&
-                //this.userDO == that.userDO &&
-                this.image1Url == that.image1Url &&
-                this.image2Url == that.image2Url
-        } else {
-            false
-        }
+    val renderModelDO by lazyAndroid {
+        RenderModelDO(creator, creator, tags, imageA, imageB)
     }
 
-    override fun hashCode(): Int {
-        var result = id.hashCode()
-        //result = 31 * result + userDO.hashCode()
-        result = 31 * result + image1Url.hashCode()
-        result = 31 * result + image2Url.hashCode()
-        return result
+    //For testing
+    companion object {
+        fun generateTestFeedDO() : FeedDO {
+            return FeedDO("Starry Nights",
+                "Edwin \"Yiu Ting\" Lo",
+                listOf("Night", "Stars", "Nature").map {
+                    RenderModelDO.Tag(it)
+                },
+                RenderModelDO.Image("https://i.imgur.com/AmWThvw.jpg", 100),
+                RenderModelDO.Image("https://i.imgur.com/5on032B.jpg", 200))
+        }
     }
 }

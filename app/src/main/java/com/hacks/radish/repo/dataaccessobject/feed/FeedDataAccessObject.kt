@@ -1,12 +1,10 @@
 package com.hacks.radish.repo.dataaccessobject.feed
 
-import androidx.room.*
-import androidx.room.OnConflictStrategy.ROLLBACK
-import com.hacks.radish.repo.dataobject.FeedDO
+import androidx.room.Dao
 
 @Dao
 interface FeedDataAccessObject {
-
+    /*
     @Insert(onConflict = ROLLBACK)
     fun insertSingleFeed(feedDO : FeedDO)
 
@@ -24,4 +22,5 @@ interface FeedDataAccessObject {
 
     @Delete
     fun deleteFeed(feedDO: FeedDO)
+    */
 }

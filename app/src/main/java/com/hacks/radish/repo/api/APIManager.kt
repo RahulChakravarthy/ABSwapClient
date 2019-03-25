@@ -2,10 +2,11 @@ package com.hacks.radish.repo.api
 
 import android.content.Context
 import android.widget.Toast
+import com.hacks.radish.repo.dataobject.FeedDO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.hacks.radish.repo.dataobject.FeedDO
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,9 +18,9 @@ class APIManager @Inject constructor(private val retrofitManager: RetrofitManage
     /**
      * Make rest call to backend to fetch more FeedDOs
      */
-    fun getFeed(size : Int, onResponse : (response : List<FeedDO>?) -> Unit) {
-        retrofitManager.retrofit.create(IApiManager::class.java).getFeed(size).enqueue(object : Callback<List<FeedDO>> {
-            override fun onResponse(call: Call<List<FeedDO>>, response: Response<List<FeedDO>>) {
+    fun getFeed(size : Int, onResponse : (response : ArrayList<FeedDO>?) -> Unit) {
+        retrofitManager.retrofit.create(IApiManager::class.java).getFeed(size).enqueue(object : Callback<ArrayList<FeedDO>> {
+            override fun onResponse(call: Call<ArrayList<FeedDO>>, response: Response<ArrayList<FeedDO>>) {
                 if (response.isSuccessful) {
                     onResponse(response.body())
                 } else {
@@ -27,7 +28,8 @@ class APIManager @Inject constructor(private val retrofitManager: RetrofitManage
                 }
             }
 
-            override fun onFailure(call: Call<List<FeedDO>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<FeedDO>>, t: Throwable) {
+                Timber.d(t)
                 Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
             }
         })
