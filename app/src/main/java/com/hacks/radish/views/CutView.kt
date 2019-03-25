@@ -3,16 +3,16 @@ package com.hacks.radish.views
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.widget.ImageView
 import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.view.View
+import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import kotlin.properties.Delegates
 
 
-class SplitImageView @JvmOverloads constructor(
+class CutView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : ImageView(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
     companion object {
         const val CUT_LEFT = 0
         const val CUT_RIGHT = 1
@@ -31,8 +31,15 @@ class SplitImageView @JvmOverloads constructor(
         }
     }
 
+    var cutWidthPercentage: Int by Delegates.observable(100) { _, old, new ->
+        if (old != new) {
+            invalidate()
+            updatePadding()
+        }
+    }
+
     private val cutWidth: Float
-        get() = height.toFloat() / 2
+        get() = (cutWidthPercentage / 100f) * (height.toFloat() / 2)
 
     private val cutRatio: Float
         get() = when {
@@ -48,9 +55,6 @@ class SplitImageView @JvmOverloads constructor(
     private val cutPath = Path()
 
     init{
-        adjustViewBounds = true
-        scaleType = ScaleType.CENTER_CROP
-
         updatePadding()
 
         clearPaint.color = ContextCompat.getColor(context, android.R.color.black)
@@ -69,8 +73,8 @@ class SplitImageView @JvmOverloads constructor(
         updatePadding()
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
+    override fun dispatchDraw(canvas: Canvas?) {
+        super.dispatchDraw(canvas)
 
         cutPath.reset()
         if (cutSide == CUT_LEFT) {

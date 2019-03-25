@@ -41,19 +41,20 @@ class FeedFragment : BaseFragment() {
             listOf("Night", "Stars", "Nature").map {
                 FeedCardView.RenderModel.Tag(it)
             },
-            FeedCardView.RenderModel.Image("https://i.imgur.com/AmWThvw.jpg", 100),
+            FeedCardView.RenderModel.Image("https://i.imgur.com/AmWThvw.jpg", 300),
             FeedCardView.RenderModel.Image("https://i.imgur.com/5on032B.jpg", 200)
         )
         feedCard.render(model)
-        Timer().schedule(1000) {
-            activity?.runOnUiThread {
+        var showPercentage = true
+        feedCard.setOnClickListener {
+            if (showPercentage) {
                 feedCard.setState(FeedCardView.Companion.State.SHOW_PERCENTAGE)
-            }
-        }
-        Timer().schedule(2000) {
-            activity?.runOnUiThread {
+            } else {
                 feedCard.setState(FeedCardView.Companion.State.DEFAULT)
             }
+
+            showPercentage = !showPercentage
         }
+
     }
 }

@@ -5,12 +5,18 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import androidx.annotation.ColorRes
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import com.hacks.radish.R
-import com.hacks.radish.views.SplitImageView.Companion.CUT_LEFT
-import com.hacks.radish.views.SplitImageView.Companion.CUT_RIGHT
+import com.hacks.radish.util.fadeIn
+import com.hacks.radish.util.fadeOut
+import com.hacks.radish.views.CutView.Companion.CUT_LEFT
+import com.hacks.radish.views.CutView.Companion.CUT_RIGHT
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.tag.view.*
 import kotlinx.android.synthetic.main.view_feed_card.view.*
@@ -53,27 +59,45 @@ class FeedCardView @JvmOverloads constructor(
             return Math.min(100, field)
         }
 
-    private var imageCutAnimator: ValueAnimator? = null
+    private var cutLocationAnimator: ValueAnimator? = null
+    private var cutWidthAnimator: ValueAnimator? = null
 
     init {
         View.inflate(context, R.layout.view_feed_card, this)
 
-        image_right.cutSide = CUT_LEFT
-        image_left.cutSide = CUT_RIGHT
+        cut_right.cutSide = CUT_LEFT
+        cut_left.cutSide = CUT_RIGHT
     }
 
-    private fun animateCutPercentage(imageAPercentage: Int) {
-        imageCutAnimator?.cancel()
+    private fun animateCutPercentage(imageAPercentage: Int): ValueAnimator? {
+        cutLocationAnimator?.cancel()
         val parsedWeight = Math.max(Math.min(imageAPercentage, 75), 25)
-        imageCutAnimator = ValueAnimator.ofInt(cutPercentage, parsedWeight)
-        imageCutAnimator?.let {
+        cutLocationAnimator = ValueAnimator.ofInt(cutPercentage, parsedWeight)
+        cutLocationAnimator?.let {
             it.interpolator = AccelerateDecelerateInterpolator()
             it.addUpdateListener { animation ->
                 cutPercentage = animation.animatedValue as Int
             }
-            it.duration = Math.max(Math.abs(cutPercentage - parsedWeight) * 20L, 400L)
+            it.duration = Math.abs(cutPercentage - parsedWeight) * 30L
+            it.startDelay = 200
             it.start()
         }
+        return cutLocationAnimator
+    }
+
+    private fun animateCutWidthPercentage(from: Int, to:Int): ValueAnimator? {
+        cutWidthAnimator?.cancel()
+        cutWidthAnimator = ValueAnimator.ofInt(from, to)
+        cutWidthAnimator?.let {
+            it.interpolator = LinearInterpolator()
+            it.addUpdateListener {
+                cut_left.cutWidthPercentage = it.animatedValue as Int
+                cut_right.cutWidthPercentage = it.animatedValue as Int
+            }
+            it.duration = 300
+            it.start()
+        }
+        return cutWidthAnimator
     }
 
     fun render(model: RenderModel) {
@@ -100,9 +124,19 @@ class FeedCardView @JvmOverloads constructor(
 
     private fun setStateDefault(animate: Boolean) {
         if (animate) {
-            animateCutPercentage(50)
+            percent_a.fadeOut()
+            percent_b.fadeOut()
+            animateCutWidthPercentage(0, 100)?.doOnEnd {
+                animateCutPercentage(50)
+            }
         } else {
             cutPercentage = 50
+
+            cut_left.cutWidthPercentage = 100
+            cut_right.cutWidthPercentage = 100
+
+            percent_a.visibility = View.GONE
+            percent_b.visibility = View.GONE
         }
     }
 
@@ -110,12 +144,25 @@ class FeedCardView @JvmOverloads constructor(
         val percentage = if (model.imageA.votes == 0L && model.imageB.votes == 0L) {
             50
         } else {
-            (model.imageA.votes / (model.imageB.votes + model.imageA.votes)).toInt()
+            (100 * (model.imageA.votes.toFloat() / (model.imageB.votes + model.imageA.votes).toFloat())).toInt()
         }
         if (animate) {
-            animateCutPercentage(percentage)
+            animateCutWidthPercentage(100, 0)?.doOnEnd {
+                animateCutPercentage(percentage)?.doOnStart {
+                    percent_a.fadeIn(500)
+                    percent_b.fadeIn(500)
+                }
+            }
         } else {
             cutPercentage = percentage
+            cut_left.cutWidthPercentage = 0
+            cut_right.cutWidthPercentage = 0
+
+            percent_a.visibility = View.VISIBLE
+            percent_a.alpha = 1f
+
+            percent_b.visibility = View.VISIBLE
+            percent_b.alpha = 1f
         }
     }
 
@@ -138,6 +185,10 @@ class FeedCardView @JvmOverloads constructor(
         model.tags.forEach { tag ->
             tags_container.addView(newTagView(tag.name))
         }
+        val aVotePercentage = (100 * (model.imageA.votes.toFloat() / (model.imageB.votes + model.imageA.votes).toFloat())).toInt()
+        val bVotePercentage = 100 - aVotePercentage
+        percent_a.text = "$aVotePercentage%"
+        percent_b.text = "$bVotePercentage%"
     }
 
 
@@ -151,7 +202,7 @@ class FeedCardView @JvmOverloads constructor(
     }
 
     private fun onWeightChanged() {
-        image_left.cutPercentage = cutPercentage
-        image_right.cutPercentage = cutPercentage
+        cut_left.cutPercentage = cutPercentage
+        cut_right.cutPercentage = cutPercentage
     }
 }

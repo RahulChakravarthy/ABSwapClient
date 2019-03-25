@@ -21,20 +21,77 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
-            <com.hacks.radish.views.SplitImageView
+            <com.hacks.radish.views.CutView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@color/colorPrimary"
-                    android:id="@+id/image_right"
                     android:clickable="true"
-                    android:focusable="true"/>
-            <com.hacks.radish.views.SplitImageView
+                    android:id="@+id/cut_right"
+                    android:focusable="true">
+                <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                                   android:layout_height="match_parent">
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                               android:src="@color/colorPrimary"
+                               android:adjustViewBounds="true"
+                               android:scaleType="centerCrop"
+                               android:id="@+id/image_right"
+                               app:layout_constraintLeft_toLeftOf="parent"
+                               app:layout_constraintRight_toRightOf="parent"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintTop_toTopOf="parent"
+                    />
+                    <TextView
+                            android:text="50%"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:id="@+id/percent_b"
+                            app:layout_constraintBottom_toBottomOf="@+id/image_right"
+                            app:layout_constraintStart_toStartOf="@+id/image_right"
+                            app:layout_constraintEnd_toEndOf="@+id/image_right"
+                            android:background="@color/lightGrayTransparent" android:textColor="@android:color/white"
+                            android:paddingTop="24dp" android:textSize="18sp"
+                            android:paddingBottom="24dp"
+                            android:textAlignment="center"
+                            android:visibility="gone"
+                            android:fontFamily="sans-serif-black"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.hacks.radish.views.CutView>
+            <com.hacks.radish.views.CutView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:src="@color/colorAccent"
-                    android:id="@+id/image_left"
+                    android:id="@+id/cut_left"
                     android:clickable="true"
                     android:focusable="true"
-            />
+            >
+                <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                                   android:layout_height="match_parent">
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                               android:src="@color/colorAccent"
+                               android:adjustViewBounds="true"
+                               android:scaleType="centerCrop"
+                               android:id="@+id/image_left"
+                               app:layout_constraintLeft_toLeftOf="parent"
+                               app:layout_constraintRight_toRightOf="parent"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintTop_toTopOf="parent"
+                    />
+                    <TextView
+                            android:text="50%"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:id="@+id/percent_a"
+                            app:layout_constraintBottom_toBottomOf="@+id/image_left"
+                            app:layout_constraintStart_toStartOf="@+id/image_left"
+                            app:layout_constraintEnd_toEndOf="@+id/image_left"
+                            android:background="@color/lightGrayTransparent" android:textColor="@android:color/white"
+                            android:paddingTop="24dp"
+                            android:paddingBottom="24dp"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:visibility="gone"
+                            android:fontFamily="sans-serif-black"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.hacks.radish.views.CutView>
         </FrameLayout>
         <TextView
                 tools:text="Starry Nights"
