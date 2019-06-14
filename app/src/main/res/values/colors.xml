@@ -7,7 +7,7 @@
     <color name="lightGray">#e8e5e5</color>
     <color name="lightGrayTransparent">#40161616</color>
     <color name="lightBlue">#4286f4</color>
-    
+
     <color name="radish_red_default">#ff6363</color>
     <color name="radish_red_muted">#FCF6F6</color>
     <color name="radish_red_dark">#AA4343</color>
@@ -15,4 +15,5 @@
     <color name="radish_green_default">#34dc32</color>
     <color name="radish_green_muted">#69AF69</color>
     <color name="radish_green_dark">#1E811C</color>
+
 </resources>

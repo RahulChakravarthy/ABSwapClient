@@ -10,16 +10,15 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 @Singleton
-class APIManager @Inject constructor(private val retrofitManager: RetrofitManager,
+class APIManager @Inject constructor(private val networkManager: NetworkManager,
                                      private val context : Context) {
 
     /**
      * Make rest call to backend to fetch more FeedDOs
      */
-    fun getFeed(size : Int, onResponse : (response : ArrayList<FeedDO>?) -> Unit) {
-        retrofitManager.retrofit.create(IApiManager::class.java).getFeed(size).enqueue(object : Callback<ArrayList<FeedDO>> {
+    fun getFeed(size : Int, onResponse : (response : List<FeedDO>?) -> Unit) {
+        networkManager.retrofit.create(IApiManager::class.java).getFeed(size).enqueue(object : Callback<ArrayList<FeedDO>>{
             override fun onResponse(call: Call<ArrayList<FeedDO>>, response: Response<ArrayList<FeedDO>>) {
                 if (response.isSuccessful) {
                     onResponse(response.body())
@@ -32,6 +31,7 @@ class APIManager @Inject constructor(private val retrofitManager: RetrofitManage
                 Timber.d(t)
                 Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
             }
+
         })
     }
 }

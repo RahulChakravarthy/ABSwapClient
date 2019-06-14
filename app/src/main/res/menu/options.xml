@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
             android:id="@+id/uploadMenuIcon"
-            android:icon="@drawable/uploadicon"
-            app:showAsAction="always"
+            android:icon="@drawable/ic_uploadicon"
+            app:showAsAction="ifRoom"
             android:title="@string/upload">
     </item>
 </menu>

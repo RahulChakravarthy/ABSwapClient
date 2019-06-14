@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class RetrofitManager @Inject constructor(context : Context) {
+class NetworkManager @Inject constructor(context : Context) {
 
     val retrofit : Retrofit
     private val logging : HttpLoggingInterceptor

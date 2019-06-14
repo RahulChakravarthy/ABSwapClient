@@ -3,7 +3,7 @@
 
     <item
             android:id="@+id/navigation_upload"
-            android:icon="@drawable/uploadicon"
+            android:icon="@drawable/ic_uploadicon"
             android:title="@string/post"/>
 
     <item
