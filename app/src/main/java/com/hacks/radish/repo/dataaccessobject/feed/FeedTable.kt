@@ -19,7 +19,7 @@ class FeedTable @Inject constructor(private val context :  Context) : BaseTable(
         dao = applicationDatabase.feedDataAccessObject()
     }
 
-    fun insertFavouritePlate(feedDO: FeedDO, operation : DatabaseOperationInterface<Any?>) {
+    fun insertFavouritePlate(feedDO: ImagePairDO, operation : DatabaseOperationInterface<Any?>) {
         doDatabaseOperation {
             operation.beforeOperation()
             dao.insertSingleFeed(feedDO)
@@ -27,7 +27,7 @@ class FeedTable @Inject constructor(private val context :  Context) : BaseTable(
         }
     }
 
-    fun insertFavouritePlates(feedDOs : List<FeedDO>, operation : DatabaseOperationInterface<Any?>) {
+    fun insertFavouritePlates(feedDOs : List<ImagePairDO>, operation : DatabaseOperationInterface<Any?>) {
         doDatabaseOperation {
             operation.beforeOperation()
             dao.insertMultipleFeeds(feedDOs)
@@ -35,7 +35,7 @@ class FeedTable @Inject constructor(private val context :  Context) : BaseTable(
         }
     }
 
-    fun fetchFavouritePlateById(id : Long, operation : DatabaseOperationInterface<FeedDO>) {
+    fun fetchFavouritePlateById(id : Long, operation : DatabaseOperationInterface<ImagePairDO>) {
         doDatabaseOperation {
             operation.beforeOperation()
             val feedDO = dao.fetchFeedById(id)
@@ -43,7 +43,7 @@ class FeedTable @Inject constructor(private val context :  Context) : BaseTable(
         }
     }
 
-    fun fetchAllFavouritePlates(operation : DatabaseOperationInterface<List<FeedDO>>) {
+    fun fetchAllFavouritePlates(operation : DatabaseOperationInterface<List<ImagePairDO>>) {
         doDatabaseOperation {
             operation.beforeOperation()
             val feedDOs = dao.fetchAllFeeds()
@@ -51,7 +51,7 @@ class FeedTable @Inject constructor(private val context :  Context) : BaseTable(
         }
     }
 
-    fun updateFavouritePlate(feedDO: FeedDO, operation : DatabaseOperationInterface<Any?>) {
+    fun updateFavouritePlate(feedDO: ImagePairDO, operation : DatabaseOperationInterface<Any?>) {
         doDatabaseOperation {
             operation.beforeOperation()
             dao.updateFeed(feedDO)
@@ -59,7 +59,7 @@ class FeedTable @Inject constructor(private val context :  Context) : BaseTable(
         }
     }
 
-    fun deleteFavouritePlate(feedDO: FeedDO, operation : DatabaseOperationInterface<Any?>) {
+    fun deleteFavouritePlate(feedDO: ImagePairDO, operation : DatabaseOperationInterface<Any?>) {
         doDatabaseOperation {
             operation.beforeOperation()
             dao.deleteFeed(feedDO)

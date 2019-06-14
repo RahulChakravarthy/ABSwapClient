@@ -14,7 +14,7 @@ import com.hacks.radish.fragments.FeedFragment
 import com.hacks.radish.fragments.PostFragment
 import com.hacks.radish.managers.MenuManager
 import com.hacks.radish.repo.api.APIManager
-import com.hacks.radish.repo.dataobject.FeedDO
+import com.hacks.radish.repo.dataobject.ImagePairDO
 import com.hacks.radish.util.lazyAndroid
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -44,7 +44,7 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
     }
 
     val feedListLiveData by lazyAndroid {
-        MutableLiveData<ArrayList<FeedDO>>()
+        MutableLiveData<List<ImagePairDO>>()
     }
 
     init {
@@ -53,10 +53,10 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
     }
 
     fun fetchNewFeed(size : Int) {
-//        apiManager.getFeed(size) {
-//            feedListLiveData.value = it
-//        }
-        feedListLiveData.value = Array(5) {FeedDO.generateTestFeedDO()}.toCollection(ArrayList())
+        apiManager.getFeed(size) {
+            feedListLiveData.value = it?.imagePairsDO
+        }
+//        feedListLiveData.value = Array(5) {ImagePairDO.generateTestFeedDO()}.toCollection(ArrayList())
     }
 
     fun onOptionsItemSelected(item: MenuItem?) : Boolean {

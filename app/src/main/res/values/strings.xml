@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ABSwapClient</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -12,6 +12,6 @@
     <string name="uploadImage1">Upload Image 1</string>
     <string name="uploadImage2">Upload Image 2</string>
     <string name="upload_images">Upload Images!</string>
-    <string name="host_name">http://ec2–3–14–1–53.us-east-2.compute.amazonaws.com:5000/</string>
+    <string name="host_name" tools:ignore="TypographyDashes">http://ec2-3-14-1-53.us-east-2.compute.amazonaws.com:5000/</string>
     <string name="upload">upload</string>
 </resources>

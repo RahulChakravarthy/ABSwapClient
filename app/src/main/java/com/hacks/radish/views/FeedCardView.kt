@@ -12,6 +12,7 @@ import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import com.hacks.radish.R
+import com.hacks.radish.repo.dataobject.ImageDO
 import com.hacks.radish.repo.dataobject.RenderModelDO
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.tag.view.*
@@ -36,8 +37,8 @@ class FeedCardView @JvmOverloads constructor(
         title = "",
         creator = "",
         tags = listOf(),
-        imageA = RenderModelDO.Image("", 0),
-        imageB = RenderModelDO.Image("", 0))
+        imageA = ImageDO("", 0),
+        imageB = ImageDO("", 0))
 
     private var state: State = Companion.State.DEFAULT
 
@@ -132,10 +133,10 @@ class FeedCardView @JvmOverloads constructor(
     }
 
     private fun setStateShowPercentage(animate: Boolean) {
-        val percentage = if (model.imageA.votes == 0L && model.imageB.votes == 0L) {
+        val percentage = if (model.imageA.voteCount == 0L && model.imageB.voteCount == 0L) {
             50
         } else {
-            (100 * (model.imageA.votes.toFloat() / (model.imageB.votes + model.imageA.votes).toFloat())).toInt()
+            (100 * (model.imageA.voteCount.toFloat() / (model.imageB.voteCount + model.imageA.voteCount).toFloat())).toInt()
         }
         if (animate) {
             animateCutWidthPercentage(100, 0)?.doOnEnd {
@@ -169,14 +170,14 @@ class FeedCardView @JvmOverloads constructor(
         }
 
         tags_container.removeAllViews()
-        Picasso.get().load(model.imageA.url).into(image_left)
-        Picasso.get().load(model.imageB.url).into(image_right)
+        Picasso.get().load(model.imageA.imageUrl).into(image_left)
+        Picasso.get().load(model.imageB.imageUrl).into(image_right)
         title.text = model.title
         tags_container.addView(newTagView(model.creator, android.R.color.black, android.R.color.white))
         model.tags.forEach { tag ->
             tags_container.addView(newTagView(tag.name))
         }
-        val aVotePercentage = (100 * (model.imageA.votes.toFloat() / (model.imageB.votes + model.imageA.votes).toFloat())).toInt()
+        val aVotePercentage = (100 * (model.imageA.voteCount.toFloat() / (model.imageB.voteCount + model.imageA.voteCount).toFloat())).toInt()
         val bVotePercentage = 100 - aVotePercentage
         percent_a.text = "$aVotePercentage%"
         percent_b.text = "$bVotePercentage%"

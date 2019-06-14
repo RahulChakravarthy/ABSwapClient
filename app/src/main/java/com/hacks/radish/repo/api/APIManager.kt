@@ -2,7 +2,7 @@ package com.hacks.radish.repo.api
 
 import android.content.Context
 import android.widget.Toast
-import com.hacks.radish.repo.dataobject.FeedDO
+import com.hacks.radish.repo.dataobject.ImagePairsDO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,9 +17,9 @@ class APIManager @Inject constructor(private val networkManager: NetworkManager,
     /**
      * Make rest call to backend to fetch more FeedDOs
      */
-    fun getFeed(size : Int, onResponse : (response : List<FeedDO>?) -> Unit) {
-        networkManager.retrofit.create(IApiManager::class.java).getFeed(size).enqueue(object : Callback<ArrayList<FeedDO>>{
-            override fun onResponse(call: Call<ArrayList<FeedDO>>, response: Response<ArrayList<FeedDO>>) {
+    fun getFeed(size : Int, onResponse : (response : ImagePairsDO?) -> Unit) {
+        networkManager.retrofit.create(IApiManager::class.java).getFeed(size).enqueue(object : Callback<ImagePairsDO> {
+            override fun onResponse(call: Call<ImagePairsDO>, response: Response<ImagePairsDO>) {
                 if (response.isSuccessful) {
                     onResponse(response.body())
                 } else {
@@ -27,7 +27,7 @@ class APIManager @Inject constructor(private val networkManager: NetworkManager,
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<FeedDO>>, t: Throwable) {
+            override fun onFailure(call: Call<ImagePairsDO>, t: Throwable) {
                 Timber.d(t)
                 Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
             }

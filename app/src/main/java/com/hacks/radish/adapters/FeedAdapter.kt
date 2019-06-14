@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hacks.radish.R
-import com.hacks.radish.repo.dataobject.FeedDO
+import com.hacks.radish.repo.dataobject.ImagePairDO
 import com.hacks.radish.views.FeedCardView
 import kotlinx.android.synthetic.main.adapter_feed_view.view.*
 import java.util.*
 
-class FeedAdapter(val initialList : ArrayList<FeedDO>, val context : Context) : RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
+class FeedAdapter(private val initialList : List<ImagePairDO>, val context : Context) : RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
 
     class ViewHolder(private val view : View) : RecyclerView.ViewHolder(view)
 
-    var list: ArrayList<FeedDO> = initialList
+    var list: List<ImagePairDO> = initialList
         set(value) {
             field = value
             notifyDataSetChanged()

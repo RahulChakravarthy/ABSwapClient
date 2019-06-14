@@ -6,21 +6,21 @@ import androidx.room.Dao
 interface FeedDataAccessObject {
     /*
     @Insert(onConflict = ROLLBACK)
-    fun insertSingleFeed(feedDO : FeedDO)
+    fun insertSingleFeed(feedDO : ImagePairDO)
 
     @Insert(onConflict = ROLLBACK)
-    fun insertMultipleFeeds(feedDOs : List<FeedDO>)
+    fun insertMultipleFeeds(feedDOs : List<ImagePairDO>)
 
-    @Query("SELECT * FROM FeedDO")
-    fun fetchAllFeeds() : List<FeedDO>
+    @Query("SELECT * FROM ImagePairDO")
+    fun fetchAllFeeds() : List<ImagePairDO>
 
-    @Query("SELECT * FROM FeedDO WHERE id = :feedId")
-    fun fetchFeedById (feedId : Long) : FeedDO
+    @Query("SELECT * FROM ImagePairDO WHERE id = :feedId")
+    fun fetchFeedById (feedId : Long) : ImagePairDO
 
     @Update(onConflict = ROLLBACK)
-    fun updateFeed(feedDO: FeedDO)
+    fun updateFeed(feedDO: ImagePairDO)
 
     @Delete
-    fun deleteFeed(feedDO: FeedDO)
+    fun deleteFeed(feedDO: ImagePairDO)
     */
 }

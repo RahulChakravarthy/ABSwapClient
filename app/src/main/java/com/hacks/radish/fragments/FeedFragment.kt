@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hacks.radish.R
 import com.hacks.radish.activities.MainApplication
 import com.hacks.radish.adapters.FeedAdapter
-import com.hacks.radish.repo.dataobject.FeedDO
+import com.hacks.radish.repo.dataobject.ImagePairDO
 import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.viewmodels.MainActivityViewModel
 import com.hacks.radish.viewmodels.MainViewModelFactory
@@ -50,7 +50,7 @@ class FeedFragment : BaseFragment() {
         mainActivityViewModel.fetchNewFeed(5) //Fetch a new feed
     }
 
-    private fun setupRecyclerView(list : ArrayList<FeedDO>) {
+    private fun setupRecyclerView(list : List<ImagePairDO>) {
         feedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         feedRecyclerView.adapter = FeedAdapter(list, requireContext())
     }
