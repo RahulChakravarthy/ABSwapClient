@@ -11,14 +11,14 @@ import javax.inject.Singleton
 
 
 @Singleton
-class APIManager @Inject constructor(private val retrofitManager: RetrofitManager,
+class APIManager @Inject constructor(private val networkManager: NetworkManager,
                                      private val context : Context) {
 
     /**
      * Make rest call to backend to fetch more FeedDOs
      */
     fun getFeed(size : Int, onResponse : (response : List<FeedDO>?) -> Unit) {
-        retrofitManager.retrofit.create(IApiManager::class.java).getFeed(size).enqueue(object : Callback<List<FeedDO>> {
+        networkManager.retrofit.create(IApiManager::class.java).getFeed(size).enqueue(object : Callback<List<FeedDO>> {
             override fun onResponse(call: Call<List<FeedDO>>, response: Response<List<FeedDO>>) {
                 if (response.isSuccessful) {
                     onResponse(response.body())

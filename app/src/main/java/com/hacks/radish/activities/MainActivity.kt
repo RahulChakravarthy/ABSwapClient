@@ -30,12 +30,11 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         MainApplication.mainApplicationComponent.inject(this)
-        //For now
+
         fragmentManager = ApplicationFragmentManager(supportFragmentManager)
 
         //Give viewmodel ability to start activities with result
         mainActivityViewModel.startActivityForResultListener = { intent, requestCode, bundle -> startActivityForResult(intent, requestCode, bundle) }
-
         fragmentManager.loadInitialFragment(R.id.mainActivityFrameLayout, FeedFragment())
 
         //Setup action bar
@@ -50,7 +49,6 @@ class MainActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return mainActivityViewModel.onOptionsItemSelected(item)
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
