@@ -5,6 +5,9 @@ import com.hacks.radish.dagger.components.DaggerMainApplicationComponent
 import com.hacks.radish.dagger.components.MainApplicationComponent
 import com.hacks.radish.dagger.modules.MainApplicationModule
 import com.hacks.radish.dagger.modules.ManagerModule
+import com.hacks.radish.dagger.modules.NetworkModule
+import com.hacks.radish.managers.NetworkManager
+import javax.inject.Inject
 
 class MainApplication : Application() {
 
@@ -13,6 +16,7 @@ class MainApplication : Application() {
         lateinit var mainApplicationComponent : MainApplicationComponent
 
     }
+
 
     override fun onCreate() {
         super.onCreate()

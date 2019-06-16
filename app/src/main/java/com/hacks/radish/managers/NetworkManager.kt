@@ -1,4 +1,4 @@
-package com.hacks.radish.repo.api
+package com.hacks.radish.managers
 
 import android.content.Context
 import com.google.gson.Gson
@@ -8,13 +8,17 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.hacks.radish.R
+import com.hacks.radish.repo.api.interceptors.RequestInterceptor
+import com.hacks.radish.repo.api.interceptors.ResponseInterceptor
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 @Singleton
-class NetworkManager @Inject constructor(context : Context) {
+class NetworkManager @Inject constructor(context : Context,
+                                         requestInterceptor: RequestInterceptor,
+                                         responseInterceptor: ResponseInterceptor) {
 
     val retrofit : Retrofit
     private val logging : HttpLoggingInterceptor
@@ -29,6 +33,8 @@ class NetworkManager @Inject constructor(context : Context) {
         logging = HttpLoggingInterceptor { message -> Timber.i(message) }
         client = OkHttpClient.Builder()
             .addInterceptor(logging)
+            .addInterceptor(requestInterceptor)
+            .addInterceptor(responseInterceptor)
             .build()
 
         gson = GsonBuilder().create()

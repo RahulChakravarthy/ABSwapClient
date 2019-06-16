@@ -8,21 +8,25 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.hacks.radish.R
 import com.hacks.radish.fragments.BaseFragment
 import com.hacks.radish.fragments.FeedFragment
 import com.hacks.radish.fragments.PostFragment
 import com.hacks.radish.managers.MenuManager
-import com.hacks.radish.repo.api.APIManager
+import com.hacks.radish.repo.api.feed.FeedApi
+import com.hacks.radish.repo.api.feed.IFeedApi
 import com.hacks.radish.repo.dataobject.ImagePairDO
 import com.hacks.radish.util.lazyAndroid
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class MainActivityViewModel @Inject constructor(private val context : Context,
                                                 private val menuManager: MenuManager,
-                                                private val apiManager: APIManager) : BaseViewModel() {
+                                                private val feedApi: FeedApi) : BaseViewModel() {
 
     companion object {
         const val UPLOAD_IMAGE_1_REQUEST_CODE = 10
@@ -53,10 +57,13 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
     }
 
     fun fetchNewFeed(size : Int) {
-        apiManager.getFeed(size) {
-            feedListLiveData.value = it?.imagePairsDO
+        vms.launch {
+            feedListLiveData.postValue(feedApi.getFeed(5)?.imagePairsDO)
         }
-//        feedListLiveData.value = Array(5) {ImagePairDO.generateTestFeedDO()}.toCollection(ArrayList())
+    }
+
+    fun getMdeiaFragments() {
+
     }
 
     fun onOptionsItemSelected(item: MenuItem?) : Boolean {

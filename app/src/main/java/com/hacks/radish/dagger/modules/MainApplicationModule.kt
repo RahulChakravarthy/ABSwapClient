@@ -10,11 +10,11 @@ class MainApplicationModule(val application: Application) {
 
     @Provides
     fun application() : Application {
-        return this.application
+        return application
     }
 
     @Provides
     fun context() : Context {
-        return this.application
+        return application
     }
 }
