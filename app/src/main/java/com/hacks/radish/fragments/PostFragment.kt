@@ -89,7 +89,7 @@ class PostFragment : BaseFragment() {
 
     private fun onUploadImagesClicked() {
         uploadImageButton.setOnClickListener {
-            //Verify that there are 2 images to upload
+            //Verify that there are 2 assets to upload
             if (mainActivityViewModel.image1UriLiveData.value != Uri.EMPTY && mainActivityViewModel.image2UriLiveData.value != Uri.EMPTY) {
                 //mainActivityViewModel.uploadImages()
                 //Show loading screen

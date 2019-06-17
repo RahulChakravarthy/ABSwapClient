@@ -8,7 +8,7 @@ import java.io.Serializable
 //@Entity(tableName = "ImagePairDO")
 data class ImagePairDO(@SerializedName("_id") val id: String = "",
                        @SerializedName("created_timestamp") val created_timestamp: String = "",
-                       @SerializedName("images") val images : List<ImageDO> = listOf(),
+                       @SerializedName("assets") val images : List<ImageDO> = listOf(),
                        @SerializedName("tags") val tags: List<String> = listOf()
                   ) : DataObject(), Serializable {
 

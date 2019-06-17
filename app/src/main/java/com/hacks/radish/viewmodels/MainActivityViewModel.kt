@@ -6,13 +6,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.annotation.LayoutRes
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hacks.radish.R
 import com.hacks.radish.fragments.BaseFragment
 import com.hacks.radish.fragments.FeedFragment
+import com.hacks.radish.fragments.GalleryFragment
 import com.hacks.radish.fragments.PostFragment
+import com.hacks.radish.managers.ApplicationFragmentManager
 import com.hacks.radish.managers.MenuManager
 import com.hacks.radish.repo.api.feed.FeedApi
 import com.hacks.radish.repo.api.feed.IFeedApi
@@ -32,8 +35,6 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
         const val UPLOAD_IMAGE_1_REQUEST_CODE = 10
         const val UPLOAD_IMAGE_2_REQUEST_CODE = 11
     }
-
-    lateinit var startActivityForResultListener : (intent : Intent, requestCode : Int, bundle : Bundle?) -> Unit
 
     val dashboardFragments : ArrayList<BaseFragment> by lazyAndroid { ArrayList<BaseFragment>() }
     val image1UriLiveData by lazyAndroid {
@@ -62,8 +63,8 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
         }
     }
 
-    fun getMdeiaFragments() {
-
+    fun onCardClicked() {
+        fragmentManager.addFragment(GalleryFragment())
     }
 
     fun onOptionsItemSelected(item: MenuItem?) : Boolean {

@@ -1,5 +1,6 @@
 package com.hacks.radish.managers
 
+import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import com.hacks.radish.fragments.BaseFragment
@@ -20,5 +21,32 @@ class ApplicationFragmentManager @Inject constructor(private val fragmentManager
             .beginTransaction()
             .add(containerId, startingFragment)
             .commit()
+    }
+
+    fun addFragment(baseFragment: BaseFragment,
+                    @AnimRes enterAnimation : Int = 0,
+                    @AnimRes exitAnimation: Int = 0,
+                    @AnimRes popEnter : Int = 0,
+                    @AnimRes popExit : Int = 0,
+                    addToBackStack : Boolean = true,
+                    tag : String? = null) {
+        fragmentManager
+            .beginTransaction()
+            .add(baseFragment, tag)
+            .setCustomAnimations(enterAnimation, exitAnimation, popEnter, popExit)
+            .apply {
+                if (addToBackStack) {
+                    addToBackStack(tag)
+                }
+            }.commit()
+    }
+
+    fun replaceFragment(baseFragment: BaseFragment) {
+
+    }
+
+    fun popFragment() {
+        fragmentManager
+            .popBackStack()
     }
 }

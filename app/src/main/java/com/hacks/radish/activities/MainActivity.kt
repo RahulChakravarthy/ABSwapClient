@@ -21,7 +21,7 @@ class MainActivity : BaseActivity() {
 
     lateinit var fragmentManager: ApplicationFragmentManager
 
-    val mainActivityViewModel : MainActivityViewModel by lazyAndroid {
+    private val mainActivityViewModel : MainActivityViewModel by lazyAndroid {
         ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
     }
 
@@ -35,7 +35,8 @@ class MainActivity : BaseActivity() {
 
         //Give viewmodel ability to start activities with result
         mainActivityViewModel.startActivityForResultListener = { intent, requestCode, bundle -> startActivityForResult(intent, requestCode, bundle) }
-        fragmentManager.loadInitialFragment(R.id.mainActivityFrameLayout, FeedFragment())
+        mainActivityViewModel.fragmentManager = fragmentManager
+        mainActivityViewModel.loadInitialFragment(R.id.mainActivityFrameLayout, FeedFragment())
 
         //Setup action bar
         setSupportActionBar(toolbar)

@@ -1,4 +1,4 @@
 package com.hacks.radish.repo.dataobject
 
-class GalleryDO : DataObject() {
+class GalleryDO(val imageA : String, val imageB : String) : DataObject() {
 }
