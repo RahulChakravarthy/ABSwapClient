@@ -8,14 +8,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.hacks.radish.R
+import com.bumptech.glide.Glide
 import com.hacks.radish.activities.MainApplication
 import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.viewmodels.MainActivityViewModel
 import com.hacks.radish.viewmodels.MainViewModelFactory
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_post.*
 import javax.inject.Inject
+import com.bumptech.glide.request.RequestOptions
+
 
 
 class PostFragment : BaseFragment() {
@@ -45,15 +46,15 @@ class PostFragment : BaseFragment() {
         }
         mainActivityViewModel.image1UriLiveData.observe(this, Observer {
             if (it != Uri.EMPTY) {
-                Picasso.get()
+                val options = RequestOptions().centerCrop()
+                Glide.with(this)
+                    .setDefaultRequestOptions(options)
                     .load(it.toString())
-                    .centerCrop()
-                    .fit()
                     .into(postImage1)
                 postImage1Close.visibility = View.VISIBLE
                 postImage1Text.visibility = View.GONE
             } else {
-                postImage1.setBackgroundResource(R.drawable.rounded_gray_background)
+                postImage1.setBackgroundResource(com.hacks.radish.R.drawable.rounded_gray_background)
                 postImage1Close.visibility = View.GONE
                 postImage1Text.visibility = View.VISIBLE
             }
@@ -69,15 +70,15 @@ class PostFragment : BaseFragment() {
         }
         mainActivityViewModel.image2UriLiveData.observe(this, Observer {
             if (it != Uri.EMPTY) {
-                Picasso.get()
-                    .load(it)
-                    .centerCrop()
-                    .fit()
+                val options = RequestOptions().centerCrop()
+                Glide.with(this)
+                    .setDefaultRequestOptions(options)
+                    .load(it.toString())
                     .into(postImage2)
                 postImage2Close.visibility = View.VISIBLE
                 postImage2Text.visibility = View.GONE
             } else {
-                postImage2.setBackgroundResource(R.drawable.rounded_gray_background)
+                postImage2.setBackgroundResource(com.hacks.radish.R.drawable.rounded_gray_background)
                 postImage2Close.visibility = View.GONE
                 postImage2Text.visibility = View.VISIBLE
             }

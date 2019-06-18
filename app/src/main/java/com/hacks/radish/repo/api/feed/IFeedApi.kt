@@ -8,5 +8,5 @@ import retrofit2.http.Query
 interface IFeedApi {
 
     @GET("/feed")
-    suspend fun getFeed(@Query("size") size : Int) : Response<ImagePairsDO>
+    suspend fun getFeed(@Query("count") count : Int, @Query("offset") offset : Int = 0) : Response<ImagePairsDO>
 }

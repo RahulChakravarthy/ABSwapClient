@@ -20,7 +20,6 @@
             android:id="@+id/mainActivityFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/mainToolbar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -7,10 +7,10 @@ import android.view.MenuItem
 import androidx.lifecycle.ViewModelProviders
 import com.hacks.radish.R
 import com.hacks.radish.fragments.FeedFragment
-import com.hacks.radish.managers.ApplicationFragmentManager
 import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.viewmodels.MainActivityViewModel
 import com.hacks.radish.viewmodels.MainViewModelFactory
+import com.ncapdevi.fragnav.FragNavController
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: MainViewModelFactory
 
-    lateinit var fragmentManager: ApplicationFragmentManager
+    lateinit var fragmentManager: FragNavController
 
     private val mainActivityViewModel : MainActivityViewModel by lazyAndroid {
         ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
@@ -31,14 +31,15 @@ class MainActivity : BaseActivity() {
 
         MainApplication.mainApplicationComponent.inject(this)
 
-        fragmentManager = ApplicationFragmentManager(supportFragmentManager)
+        fragmentManager = FragNavController(supportFragmentManager, R.id.mainActivityFrameLayout).apply {
+            rootFragments = listOf(FeedFragment())
+        }
+        fragmentManager.initialize()
 
         //Give viewmodel ability to start activities with result
         mainActivityViewModel.startActivityForResultListener = { intent, requestCode, bundle -> startActivityForResult(intent, requestCode, bundle) }
         mainActivityViewModel.fragmentManager = fragmentManager
-        mainActivityViewModel.loadInitialFragment(R.id.mainActivityFrameLayout, FeedFragment())
 
-        //Setup action bar
         setSupportActionBar(toolbar)
     }
 
@@ -54,5 +55,14 @@ class MainActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         mainActivityViewModel.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onBackPressed() {
+        if (fragmentManager.isRootFragment) {
+            super.onBackPressed()
+        } else {
+            fragmentManager.popFragment()
+
+        }
     }
 }

@@ -8,6 +8,7 @@ import com.hacks.radish.dagger.modules.ManagerModule
 import com.hacks.radish.dagger.modules.NetworkModule
 import com.hacks.radish.dagger.modules.ViewModelModule
 import com.hacks.radish.fragments.FeedFragment
+import com.hacks.radish.fragments.GalleryFragment
 import com.hacks.radish.fragments.PostFragment
 import dagger.Component
 import javax.inject.Singleton
@@ -25,5 +26,7 @@ interface MainApplicationComponent {
     fun inject(postFragment: PostFragment)
 
     fun inject(feedFragment: FeedFragment)
+
+    fun inject(galleryFragment: GalleryFragment)
 
 }

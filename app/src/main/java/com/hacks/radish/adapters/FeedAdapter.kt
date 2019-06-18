@@ -11,7 +11,7 @@ import com.hacks.radish.views.FeedCardView
 import kotlinx.android.synthetic.main.adapter_feed_view.view.*
 import java.util.*
 
-class FeedAdapter(private val initialList : List<ImagePairDO>, val context : Context) : RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
+class FeedAdapter(private val initialList : List<ImagePairDO>, val context : Context, val feedCardOnClickListener: View.OnClickListener) : RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
 
     class ViewHolder(private val view : View) : RecyclerView.ViewHolder(view)
 
@@ -21,7 +21,7 @@ class FeedAdapter(private val initialList : List<ImagePairDO>, val context : Con
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_feed_view, parent, false))
     }
 
@@ -29,18 +29,11 @@ class FeedAdapter(private val initialList : List<ImagePairDO>, val context : Con
         return list.size
     }
 
-    override fun onBindViewHolder(holder: FeedAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView.feedCard) {
             render(list[position].renderModelDO)
-            var showPercentage = true
             feedCard.setOnClickListener {
-                if (showPercentage) {
-                    feedCard.setState(FeedCardView.Companion.State.SHOW_PERCENTAGE)
-                } else {
-                    feedCard.setState(FeedCardView.Companion.State.DEFAULT)
-                }
-
-                showPercentage = !showPercentage
+                feedCardOnClickListener.onClick(feedCard)
             }
         }
     }

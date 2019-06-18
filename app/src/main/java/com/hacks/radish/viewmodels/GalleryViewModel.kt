@@ -16,8 +16,9 @@ class GalleryViewModel  @Inject constructor() : BaseViewModel() {
         MutableLiveData<GalleryDO>()
     }
 
-    val mediaFragments by lazyAndroid {
-        listOf(
+    val mediaFragments : List<BaseFragment>
+    get() {
+        return listOf(
             MediaFragment(galleryLiveData.value!!.imageA),
             MediaFragment(galleryLiveData.value!!.imageB),
             VotingFragment()

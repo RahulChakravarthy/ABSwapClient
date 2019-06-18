@@ -11,10 +11,10 @@ import androidx.annotation.ColorRes
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.hacks.radish.R
 import com.hacks.radish.repo.dataobject.ImageDO
 import com.hacks.radish.repo.dataobject.RenderModelDO
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.tag.view.*
 import kotlinx.android.synthetic.main.view_feed_card.view.*
 import com.hacks.radish.util.fadeIn
@@ -24,7 +24,7 @@ import com.hacks.radish.views.CutView.Companion.CUT_RIGHT
 
 class FeedCardView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr), View.OnClickListener {
 
     companion object {
         enum class State {
@@ -33,7 +33,7 @@ class FeedCardView @JvmOverloads constructor(
         }
     }
 
-    private var model: RenderModelDO = RenderModelDO(
+    var model: RenderModelDO = RenderModelDO(
         title = "",
         creator = "",
         tags = listOf(),
@@ -59,6 +59,18 @@ class FeedCardView @JvmOverloads constructor(
 
         cut_right.cutSide = CUT_LEFT
         cut_left.cutSide = CUT_RIGHT
+    }
+
+    override fun onClick(view: View) {
+        when(state) {
+            Companion.State.DEFAULT -> {
+                setState(Companion.State.SHOW_PERCENTAGE)
+            }
+            Companion.State.SHOW_PERCENTAGE -> {
+                setState(Companion.State.DEFAULT)
+            }
+
+        }
     }
 
     private fun animateCutPercentage(imageAPercentage: Int): ValueAnimator? {
@@ -170,8 +182,8 @@ class FeedCardView @JvmOverloads constructor(
         }
 
         tags_container.removeAllViews()
-        Picasso.get().load(model.imageA.imageUrl).into(image_left)
-        Picasso.get().load(model.imageB.imageUrl).into(image_right)
+        Glide.with(this).load(model.imageA.imageUrl).into(image_left)
+        Glide.with(this).load(model.imageB.imageUrl).into(image_right)
         title.text = model.title
         tags_container.addView(newTagView(model.creator, android.R.color.black, android.R.color.white))
         model.tags.forEach { tag ->

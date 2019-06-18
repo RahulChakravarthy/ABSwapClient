@@ -4,25 +4,22 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.view.MenuItem
-import androidx.annotation.LayoutRes
+import android.view.View
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.hacks.radish.R
 import com.hacks.radish.fragments.BaseFragment
 import com.hacks.radish.fragments.FeedFragment
 import com.hacks.radish.fragments.GalleryFragment
 import com.hacks.radish.fragments.PostFragment
-import com.hacks.radish.managers.ApplicationFragmentManager
 import com.hacks.radish.managers.MenuManager
 import com.hacks.radish.repo.api.feed.FeedApi
-import com.hacks.radish.repo.api.feed.IFeedApi
+import com.hacks.radish.repo.dataobject.GalleryDO
 import com.hacks.radish.repo.dataobject.ImagePairDO
 import com.hacks.radish.util.lazyAndroid
+import com.hacks.radish.views.FeedCardView
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -59,12 +56,21 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
 
     fun fetchNewFeed(size : Int) {
         vms.launch {
-            feedListLiveData.postValue(feedApi.getFeed(5)?.imagePairsDO)
+            feedListLiveData.postValue(feedApi.getFeed(size)?.imagePairsDO)
         }
     }
 
-    fun onCardClicked() {
-        fragmentManager.addFragment(GalleryFragment())
+    fun getFeedOnClickListener(): View.OnClickListener {
+        return View.OnClickListener {
+            with(it as FeedCardView) {
+//                onClick(this)
+                onCardClicked(model.imageA.imageUrl, model.imageB.imageUrl)
+            }
+        }
+    }
+
+    fun onCardClicked(imageA : String, imageB : String) {
+        fragmentManager.pushFragment(GalleryFragment(GalleryDO(imageA, imageB)))
     }
 
     fun onOptionsItemSelected(item: MenuItem?) : Boolean {

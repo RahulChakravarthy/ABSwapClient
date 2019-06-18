@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.viewmodels.MainActivityViewModel
 import com.hacks.radish.viewmodels.MainViewModelFactory
 import kotlinx.android.synthetic.main.fragment_feed.*
+import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class FeedFragment : BaseFragment() {
@@ -52,6 +54,6 @@ class FeedFragment : BaseFragment() {
 
     private fun setupRecyclerView(list : List<ImagePairDO>) {
         feedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-        feedRecyclerView.adapter = FeedAdapter(list, requireContext())
+        feedRecyclerView.adapter = FeedAdapter(list, requireContext(), mainActivityViewModel.getFeedOnClickListener())
     }
 }
