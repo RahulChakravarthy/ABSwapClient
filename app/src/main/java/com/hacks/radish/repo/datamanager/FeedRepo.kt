@@ -1,5 +1,6 @@
-package com.hacks.radish.repo.api.feed
+package com.hacks.radish.repo.datamanager
 
+import com.hacks.radish.repo.api.feed.IFeedApi
 import com.hacks.radish.repo.dataobject.ImagePairsDO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -7,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FeedApi @Inject constructor(val feedApi: IFeedApi) {
+class FeedRepo @Inject constructor(val feedApi: IFeedApi) {
 
     suspend fun getFeed(size : Int) : ImagePairsDO? {
         val response = feedApi.getFeed(size)

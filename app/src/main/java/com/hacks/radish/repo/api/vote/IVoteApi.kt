@@ -8,5 +8,5 @@ import retrofit2.http.POST
 interface IVoteApi {
 
     @POST("/image_pair/vote")
-    fun voteImagePair(@Body voteDO: VoteDO) : Response<String>
+    suspend fun voteImagePair(@Body voteDO: VoteDO) : Response<String>
 }

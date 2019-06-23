@@ -132,6 +132,9 @@ dependencies {
 
     //FragNav
     implementation 'com.ncapdevi:frag-nav:3.2.0'
+
+    //Autofit textview
+    implementation 'me.grantland:autofittextview:0.2.+'
 }
 
 kotlin {

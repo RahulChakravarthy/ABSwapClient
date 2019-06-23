@@ -8,8 +8,8 @@ import retrofit2.http.POST
 interface ISessionApi {
 
     @POST("/session")
-    fun newSession() : Response<SessionDO>
+    suspend fun newSession() : Response<SessionDO>
 
     @POST("/session/update")
-    fun updateSession(@Body sessionDO: SessionDO) : Response<SessionDO>
+    suspend fun updateSession(@Body sessionDO: SessionDO) : Response<SessionDO>
 }

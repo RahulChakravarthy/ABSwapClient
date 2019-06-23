@@ -14,7 +14,7 @@ import com.hacks.radish.fragments.FeedFragment
 import com.hacks.radish.fragments.GalleryFragment
 import com.hacks.radish.fragments.PostFragment
 import com.hacks.radish.managers.MenuManager
-import com.hacks.radish.repo.api.feed.FeedApi
+import com.hacks.radish.repo.datamanager.FeedRepo
 import com.hacks.radish.repo.dataobject.GalleryDO
 import com.hacks.radish.repo.dataobject.ImagePairDO
 import com.hacks.radish.util.lazyAndroid
@@ -26,7 +26,8 @@ import javax.inject.Singleton
 @Singleton
 class MainActivityViewModel @Inject constructor(private val context : Context,
                                                 private val menuManager: MenuManager,
-                                                private val feedApi: FeedApi) : BaseViewModel() {
+                                                private val feedRepo: FeedRepo
+) : BaseViewModel() {
 
     companion object {
         const val UPLOAD_IMAGE_1_REQUEST_CODE = 10
@@ -56,7 +57,7 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
 
     fun fetchNewFeed(size : Int) {
         vms.launch {
-            feedListLiveData.postValue(feedApi.getFeed(size)?.imagePairsDO)
+            feedListLiveData.postValue(feedRepo.getFeed(size)?.imagePairsDO)
         }
     }
 
