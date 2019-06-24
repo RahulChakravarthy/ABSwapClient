@@ -32,6 +32,7 @@ class MainActivity : BaseActivity() {
         MainApplication.mainApplicationComponent.inject(this)
 
         fragmentManager = FragNavController(supportFragmentManager, R.id.mainActivityFrameLayout).apply {
+            fragmentHideStrategy = FragNavController.HIDE
             rootFragments = listOf(FeedFragment())
         }
         fragmentManager.initialize()

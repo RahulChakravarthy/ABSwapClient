@@ -14,4 +14,6 @@
     <string name="upload_images">Upload Images!</string>
     <string name="host_name" tools:ignore="TypographyDashes">http://ec2-3-14-1-53.us-east-2.compute.amazonaws.com:5000/</string>
     <string name="upload">upload</string>
+    <string name="voting_failed">Voting failed, please try again later</string>
+    <string name="vote_your_favourite_image">Vote Your Favourite Image</string>
 </resources>

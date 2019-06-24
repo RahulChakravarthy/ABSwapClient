@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.hacks.radish.R
@@ -14,9 +15,13 @@ import com.hacks.radish.fragments.FeedFragment
 import com.hacks.radish.fragments.GalleryFragment
 import com.hacks.radish.fragments.PostFragment
 import com.hacks.radish.managers.MenuManager
+import com.hacks.radish.managers.SharedPreferencesManager as SPM
 import com.hacks.radish.repo.datamanager.FeedRepo
+import com.hacks.radish.repo.datamanager.VoteRepo
 import com.hacks.radish.repo.dataobject.GalleryDO
 import com.hacks.radish.repo.dataobject.ImagePairDO
+import com.hacks.radish.repo.dataobject.RenderModelDO
+import com.hacks.radish.repo.dataobject.VoteDO
 import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.views.FeedCardView
 import kotlinx.coroutines.launch
@@ -26,7 +31,9 @@ import javax.inject.Singleton
 @Singleton
 class MainActivityViewModel @Inject constructor(private val context : Context,
                                                 private val menuManager: MenuManager,
-                                                private val feedRepo: FeedRepo
+                                                private val feedRepo: FeedRepo,
+                                                private val voteRepo: VoteRepo,
+                                                private val spm: SPM
 ) : BaseViewModel() {
 
     companion object {
@@ -50,6 +57,10 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
         MutableLiveData<List<ImagePairDO>>()
     }
 
+    val voteStatusLiveData by lazyAndroid {
+        MutableLiveData<VoteRepo.Status>()
+    }
+
     init {
         dashboardFragments.add(PostFragment())
         dashboardFragments.add(FeedFragment())
@@ -65,13 +76,20 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
         return View.OnClickListener {
             with(it as FeedCardView) {
 //                onClick(this)
-                onCardClicked(model.imageA.imageUrl, model.imageB.imageUrl)
+                onCardClicked(model)
             }
         }
     }
 
-    fun onCardClicked(imageA : String, imageB : String) {
-        fragmentManager.pushFragment(GalleryFragment(GalleryDO(imageA, imageB)))
+    fun quickVoteImage(imagePairId : String, imageIndex : Int) {
+        vms.launch {
+            val voteDO = VoteDO(spm.getSessionId(),imagePairId, imageIndex)
+            voteStatusLiveData.postValue(voteRepo.voteImagePair(voteDO))
+        }
+    }
+
+    private fun onCardClicked(renderModelDO: RenderModelDO) {
+        fragmentManager.pushFragment(GalleryFragment(GalleryDO(renderModelDO)))
     }
 
     fun onOptionsItemSelected(item: MenuItem?) : Boolean {

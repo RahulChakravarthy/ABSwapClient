@@ -5,10 +5,23 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/feedLoadingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:lottie_rawRes="@raw/loading"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/feedRecyclerView"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="8dp"

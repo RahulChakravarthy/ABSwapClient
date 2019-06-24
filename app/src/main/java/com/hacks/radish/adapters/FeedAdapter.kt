@@ -4,11 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.hacks.radish.R
 import com.hacks.radish.repo.dataobject.ImagePairDO
 import com.hacks.radish.views.FeedCardView
 import kotlinx.android.synthetic.main.adapter_feed_view.view.*
+import kotlinx.android.synthetic.main.view_feed_card.view.*
 import java.util.*
 
 class FeedAdapter(private val initialList : List<ImagePairDO>, val context : Context, val feedCardOnClickListener: View.OnClickListener) : RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
@@ -34,6 +36,12 @@ class FeedAdapter(private val initialList : List<ImagePairDO>, val context : Con
             render(list[position].renderModelDO)
             feedCard.setOnClickListener {
                 feedCardOnClickListener.onClick(feedCard)
+            }
+            feedCard.image_left.setOnClickListener {
+                Toast.makeText(context, "IMAGE LEFT CLICKED", Toast.LENGTH_SHORT).show()
+            }
+            feedCard.image_right.setOnClickListener {
+                Toast.makeText(context, "IMAGE RIGHT CLICKED", Toast.LENGTH_SHORT).show()
             }
         }
     }

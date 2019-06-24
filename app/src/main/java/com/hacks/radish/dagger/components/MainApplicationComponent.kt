@@ -3,13 +3,12 @@ package com.hacks.radish.dagger.components
 import android.app.Application
 import android.content.Context
 import com.hacks.radish.activities.MainActivity
+import com.hacks.radish.activities.MainApplication
 import com.hacks.radish.dagger.modules.MainApplicationModule
 import com.hacks.radish.dagger.modules.ManagerModule
 import com.hacks.radish.dagger.modules.NetworkModule
 import com.hacks.radish.dagger.modules.ViewModelModule
-import com.hacks.radish.fragments.FeedFragment
-import com.hacks.radish.fragments.GalleryFragment
-import com.hacks.radish.fragments.PostFragment
+import com.hacks.radish.fragments.*
 import dagger.Component
 import javax.inject.Singleton
 
@@ -21,6 +20,8 @@ interface MainApplicationComponent {
 
     fun application() : Application
 
+    fun inject(mainApplication: MainApplication)
+
     fun inject(mainActivity: MainActivity)
 
     fun inject(postFragment: PostFragment)
@@ -28,5 +29,9 @@ interface MainApplicationComponent {
     fun inject(feedFragment: FeedFragment)
 
     fun inject(galleryFragment: GalleryFragment)
+
+    fun inject(votingFragment: VotingFragment)
+
+    fun inject(mediaFragment: MediaFragment)
 
 }

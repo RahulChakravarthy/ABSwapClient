@@ -1,6 +1,6 @@
 package com.hacks.radish.repo.datamanager
 
-import android.se.omapi.Session
+import com.hacks.radish.managers.SharedPreferencesManager as SPM
 import com.hacks.radish.repo.api.BaseRepo
 import com.hacks.radish.repo.api.session.ISessionApi
 import com.hacks.radish.repo.dataobject.SessionDO
@@ -10,12 +10,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SessionRepo @Inject constructor(val sessionApi : ISessionApi) : BaseRepo() {
+class SessionRepo @Inject constructor(val sessionApi : ISessionApi,
+                                      /* Use Shared Prefs for now */ val spm : SPM) : BaseRepo() {
 
     suspend fun newSession() : SessionDO {
         return with(sessionApi.newSession()) {
             if (isSuccessful) {
                 withContext(Dispatchers.IO) {
+                    spm.putSessionId(body()!!.sessionId)
                 }
                 body()!!
             } else {
@@ -32,7 +34,7 @@ class SessionRepo @Inject constructor(val sessionApi : ISessionApi) : BaseRepo()
         return with(sessionApi.updateSession(getSession())) {
             if (isSuccessful) {
                 withContext(Dispatchers.IO) {
-
+                    spm.putSessionId(body()!!.sessionId)
                 }
                 body()!!
             } else {

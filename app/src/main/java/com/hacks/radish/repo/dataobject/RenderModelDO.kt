@@ -1,8 +1,8 @@
 package com.hacks.radish.repo.dataobject
 
-data class RenderModelDO(val title: String,
+data class RenderModelDO(val id: String,
                          val creator: String,
-                         val tags: List<RenderModelDO.Tag>,
+                         val tags: List<Tag>,
                          val imageA: ImageDO,
                          val imageB: ImageDO) {
     data class Tag(val name: String)

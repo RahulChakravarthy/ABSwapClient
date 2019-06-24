@@ -14,6 +14,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.hacks.radish.R
+import com.hacks.radish.activities.MainApplication
 import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.viewmodels.GalleryViewModel
 import com.hacks.radish.viewmodels.MainViewModelFactory
@@ -22,12 +23,20 @@ import javax.inject.Inject
 
 class MediaFragment(val asset : String) : BaseFragment() {
 
+    @Inject
+    lateinit var viewModelFactory: MainViewModelFactory
+
+    val gvm: GalleryViewModel by lazyAndroid {
+        ViewModelProviders.of(this, viewModelFactory).get(GalleryViewModel::class.java)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_media, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        MainApplication.mainApplicationComponent.inject(this)
         Glide
             .with(this)
             .asBitmap()

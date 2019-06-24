@@ -29,12 +29,14 @@ class FeedCardView @JvmOverloads constructor(
     companion object {
         enum class State {
             DEFAULT,
-            SHOW_PERCENTAGE
+            SHOW_PERCENTAGE,
+            TAP_LEFT_IMAGE,
+            TAP_RIGHT_IMAGE,
         }
     }
 
     var model: RenderModelDO = RenderModelDO(
-        title = "",
+        id = "",
         creator = "",
         tags = listOf(),
         imageA = ImageDO("", 0),
@@ -69,11 +71,36 @@ class FeedCardView @JvmOverloads constructor(
             Companion.State.SHOW_PERCENTAGE -> {
                 setState(Companion.State.DEFAULT)
             }
-
+            Companion.State.TAP_LEFT_IMAGE -> TODO()
+            Companion.State.TAP_RIGHT_IMAGE -> TODO()
         }
     }
 
-    private fun animateCutPercentage(imageAPercentage: Int): ValueAnimator? {
+    fun onQuickTap(imageATapped : Boolean) {
+        when (state) {
+            Companion.State.DEFAULT -> {
+
+            }
+            Companion.State.TAP_LEFT_IMAGE -> {
+
+            }
+            Companion.State.TAP_RIGHT_IMAGE -> {
+
+            }
+            else -> {}
+        }
+        if (imageATapped) {
+            animateCutPercentage(100, 100L, 0)
+        } else {
+            animateCutPercentage(0, 100L, 0)
+        }
+
+    }
+
+    private fun animateCutPercentage(imageAPercentage: Int,
+                                     duration : Long =  Math.abs(cutPercentage -
+                                             Math.max(Math.min(imageAPercentage, 75), 25)) * 30L,
+                                     startDelay : Long = 200): ValueAnimator? {
         cutLocationAnimator?.cancel()
         val parsedWeight = Math.max(Math.min(imageAPercentage, 75), 25)
         cutLocationAnimator = ValueAnimator.ofInt(cutPercentage, parsedWeight)
@@ -82,8 +109,8 @@ class FeedCardView @JvmOverloads constructor(
             it.addUpdateListener { animation ->
                 cutPercentage = animation.animatedValue as Int
             }
-            it.duration = Math.abs(cutPercentage - parsedWeight) * 30L
-            it.startDelay = 200
+            it.duration = duration
+            it.startDelay = startDelay
             it.start()
         }
         return cutLocationAnimator
@@ -118,11 +145,14 @@ class FeedCardView @JvmOverloads constructor(
             Companion.State.DEFAULT -> setStateDefault(animate = when(oldState) {
                 Companion.State.DEFAULT -> false
                 Companion.State.SHOW_PERCENTAGE -> true
+                else -> false
             } and allowAnimations)
             Companion.State.SHOW_PERCENTAGE -> setStateShowPercentage(animate = when(oldState) {
                 Companion.State.DEFAULT -> true
                 Companion.State.SHOW_PERCENTAGE -> false
+                else -> false
             } and allowAnimations)
+            else -> {}
         }
     }
 
@@ -184,7 +214,7 @@ class FeedCardView @JvmOverloads constructor(
         tags_container.removeAllViews()
         Glide.with(this).load(model.imageA.imageUrl).into(image_left)
         Glide.with(this).load(model.imageB.imageUrl).into(image_right)
-        title.text = model.title
+        title.text = model.id
         tags_container.addView(newTagView(model.creator, android.R.color.black, android.R.color.white))
         model.tags.forEach { tag ->
             tags_container.addView(newTagView(tag.name))

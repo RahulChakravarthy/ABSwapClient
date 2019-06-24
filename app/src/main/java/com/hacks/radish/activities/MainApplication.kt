@@ -4,9 +4,7 @@ import android.app.Application
 import com.hacks.radish.dagger.components.DaggerMainApplicationComponent
 import com.hacks.radish.dagger.components.MainApplicationComponent
 import com.hacks.radish.dagger.modules.MainApplicationModule
-import com.hacks.radish.dagger.modules.ManagerModule
-import com.hacks.radish.dagger.modules.NetworkModule
-import com.hacks.radish.managers.NetworkManager
+import com.hacks.radish.managers.InitManager
 import javax.inject.Inject
 
 class MainApplication : Application() {
@@ -17,6 +15,8 @@ class MainApplication : Application() {
 
     }
 
+    @Inject
+    lateinit var initManager: InitManager
 
     override fun onCreate() {
         super.onCreate()
@@ -26,5 +26,8 @@ class MainApplication : Application() {
                 .builder()
                 .mainApplicationModule(MainApplicationModule(this))
                 .build()
+
+        mainApplicationComponent.inject(this)
+        initManager.init()
     }
 }

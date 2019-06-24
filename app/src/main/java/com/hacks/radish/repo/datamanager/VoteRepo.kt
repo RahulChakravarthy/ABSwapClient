@@ -16,7 +16,8 @@ class VoteRepo @Inject constructor(private val voteApi : IVoteApi) : BaseRepo() 
     }
 
     suspend fun voteImagePair(voteDO : VoteDO) : Status {
-        return  if (voteApi.voteImagePair(voteDO).isSuccessful)
+        val response = voteApi.voteImagePair(voteDO)
+        return  if (response.isSuccessful)
             Status.VOTE_SUCCEED
             else
             Status.VOTE_FAILED
