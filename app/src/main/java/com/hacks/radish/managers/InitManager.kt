@@ -1,6 +1,6 @@
 package com.hacks.radish.managers
 
-import com.hacks.radish.repo.datamanager.SessionRepo
+import com.hacks.radish.repo.api.session.SessionRepo
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -42,7 +42,7 @@ class FeedCardView @JvmOverloads constructor(
         imageA = ImageDO("", 0),
         imageB = ImageDO("", 0))
 
-    private var state: State = Companion.State.DEFAULT
+    var state: State = Companion.State.DEFAULT
 
     private var cutPercentage: Int = 50
         set(value) {

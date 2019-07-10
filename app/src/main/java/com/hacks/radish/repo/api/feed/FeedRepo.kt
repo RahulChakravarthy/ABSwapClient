@@ -1,4 +1,4 @@
-package com.hacks.radish.repo.datamanager
+package com.hacks.radish.repo.api.feed
 
 import com.hacks.radish.repo.api.feed.IFeedApi
 import com.hacks.radish.repo.dataobject.ImagePairsDO

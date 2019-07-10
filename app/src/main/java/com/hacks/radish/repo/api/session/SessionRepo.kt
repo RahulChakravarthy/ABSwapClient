@@ -1,4 +1,4 @@
-package com.hacks.radish.repo.datamanager
+package com.hacks.radish.repo.api.session
 
 import com.hacks.radish.managers.SharedPreferencesManager as SPM
 import com.hacks.radish.repo.api.BaseRepo

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.hacks.radish.R
@@ -16,14 +15,15 @@ import com.hacks.radish.fragments.GalleryFragment
 import com.hacks.radish.fragments.PostFragment
 import com.hacks.radish.managers.MenuManager
 import com.hacks.radish.managers.SharedPreferencesManager as SPM
-import com.hacks.radish.repo.datamanager.FeedRepo
-import com.hacks.radish.repo.datamanager.VoteRepo
+import com.hacks.radish.repo.api.feed.FeedRepo
+import com.hacks.radish.repo.api.vote.VoteRepo
 import com.hacks.radish.repo.dataobject.GalleryDO
 import com.hacks.radish.repo.dataobject.ImagePairDO
 import com.hacks.radish.repo.dataobject.RenderModelDO
 import com.hacks.radish.repo.dataobject.VoteDO
 import com.hacks.radish.util.lazyAndroid
 import com.hacks.radish.views.FeedCardView
+import com.hacks.radish.views.listeners.FeedCardClickListener
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -57,7 +57,7 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
         MutableLiveData<List<ImagePairDO>>()
     }
 
-    val voteStatusLiveData by lazyAndroid {
+    val voteLiveData by lazyAndroid {
         MutableLiveData<VoteRepo.Status>()
     }
 
@@ -72,19 +72,48 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
         }
     }
 
-    fun getFeedOnClickListener(): View.OnClickListener {
-        return View.OnClickListener {
-            with(it as FeedCardView) {
-//                onClick(this)
-                onCardClicked(model)
+    fun getFeedOnClickListener(): FeedCardClickListener {
+        return object : FeedCardClickListener {
+            override fun onClick(feedCardView: FeedCardView) {
+                onCardClicked(feedCardView.model)
+
+//                with(feedCardView) {
+//                    val leftImageTapped = false
+//                    val rightImageTapped = false
+//                    val cardTapped = false
+//
+//                    when (state) {
+//                        FeedCardView.Companion.State.TAP_RIGHT_IMAGE -> {
+//                            when {
+//                                leftImageTapped -> setState(FeedCardView.Companion.State.TAP_LEFT_IMAGE)
+//                                rightImageTapped -> quickVoteImage("", 0)
+//                                cardTapped -> onCardClicked(model)
+//                            }
+//                        }
+//                        FeedCardView.Companion.State.TAP_LEFT_IMAGE -> {
+//                            when {
+//                                leftImageTapped -> quickVoteImage("", 0)
+//                                rightImageTapped -> setState(FeedCardView.Companion.State.TAP_RIGHT_IMAGE)
+//                                cardTapped -> onCardClicked(model)
+//                            }
+//                        }
+//                        else -> {
+//                            when {
+//                                leftImageTapped -> setState(FeedCardView.Companion.State.TAP_LEFT_IMAGE)
+//                                rightImageTapped -> setState(FeedCardView.Companion.State.TAP_RIGHT_IMAGE)
+//                                cardTapped -> onCardClicked(model)
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
     }
 
-    fun quickVoteImage(imagePairId : String, imageIndex : Int) {
+    private fun quickVoteImage(imagePairId : String, imageIndex : Int) {
         vms.launch {
             val voteDO = VoteDO(spm.getSessionId(),imagePairId, imageIndex)
-            voteStatusLiveData.postValue(voteRepo.voteImagePair(voteDO))
+            voteLiveData.postValue(voteRepo.voteImagePair(voteDO))
         }
     }
 

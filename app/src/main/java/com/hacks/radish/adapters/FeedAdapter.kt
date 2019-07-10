@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hacks.radish.R
 import com.hacks.radish.repo.dataobject.ImagePairDO
 import com.hacks.radish.views.FeedCardView
+import com.hacks.radish.views.listeners.FeedCardClickListener
 import kotlinx.android.synthetic.main.adapter_feed_view.view.*
 import kotlinx.android.synthetic.main.view_feed_card.view.*
 import java.util.*
 
-class FeedAdapter(private val initialList : List<ImagePairDO>, val context : Context, val feedCardOnClickListener: View.OnClickListener) : RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
+class FeedAdapter(private val initialList : List<ImagePairDO>, val context : Context, private val feedCardOnClickListener: FeedCardClickListener) : RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
 
     class ViewHolder(private val view : View) : RecyclerView.ViewHolder(view)
 

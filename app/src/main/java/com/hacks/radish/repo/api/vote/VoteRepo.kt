@@ -1,10 +1,7 @@
-package com.hacks.radish.repo.datamanager
+package com.hacks.radish.repo.api.vote
 
 import com.hacks.radish.repo.api.BaseRepo
-import com.hacks.radish.repo.api.vote.IVoteApi
 import com.hacks.radish.repo.dataobject.VoteDO
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
