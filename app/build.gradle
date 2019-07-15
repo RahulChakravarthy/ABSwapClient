@@ -134,6 +134,9 @@ dependencies {
 
     //Autofit textview
     implementation 'me.grantland:autofittextview:0.2.+'
+
+    //Custom recyclerview
+    implementation 'com.stone.vega.library:VegaLayoutManager:1.0.6'
 }
 
 kotlin {

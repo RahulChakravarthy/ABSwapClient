@@ -17,6 +17,7 @@ class FeedRepo @Inject constructor(val feedApi: IFeedApi) {
             //Store response in local DB
             withContext(Dispatchers.IO) {
                 //logic
+                response.body()
             }
             //Return image pairs
             response.body()

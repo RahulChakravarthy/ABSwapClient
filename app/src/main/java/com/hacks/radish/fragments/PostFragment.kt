@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -38,6 +39,12 @@ class PostFragment : BaseFragment() {
         onUploadImage1Clicked()
         onUploadImage2Clicked()
         onUploadImagesClicked()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+
     }
 
     private fun onUploadImage1Clicked() {
@@ -100,5 +107,10 @@ class PostFragment : BaseFragment() {
                 Toast.makeText(requireContext(), "Please upload 2 photos", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
     }
 }

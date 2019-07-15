@@ -63,8 +63,6 @@
             app:layout_constraintTop_toTopOf="@id/postImage2"
             app:layout_constraintEnd_toEndOf="@id/postImage2"/>
 
-
-
     <TextView
             android:id="@+id/postImage2Text"
             android:layout_width="wrap_content"
@@ -81,7 +79,7 @@
         android:layout_height="40dp"
         android:layout_width="match_parent"
         android:layout_marginBottom="25dp"
-        android:background="@color/lightBlue"
+        android:background="@color/radish_red_default"
         android:text="@string/upload_images"
         app:layout_constraintBottom_toBottomOf="parent"
     />

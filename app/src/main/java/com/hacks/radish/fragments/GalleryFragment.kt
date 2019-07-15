@@ -29,6 +29,11 @@ class GalleryFragment(val galleryDO: GalleryDO) : BaseFragment() {
         return inflater.inflate(R.layout.fragment_gallery, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         MainApplication.mainApplicationComponent.inject(this)
@@ -37,8 +42,8 @@ class GalleryFragment(val galleryDO: GalleryDO) : BaseFragment() {
         galleryViewPager.adapter = ScreenSlidePagerAdapter(gvm.mediaFragments, childFragmentManager)
     }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as AppCompatActivity).supportActionBar?.hide()
+    override fun onPause() {
+        super.onPause()
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
     }
 }

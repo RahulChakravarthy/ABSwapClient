@@ -1,11 +1,12 @@
 package com.hacks.radish.adapters.layoutmanagers
 
 import androidx.recyclerview.widget.RecyclerView
+import com.stone.vega.library.VegaLayoutManager
 
-class FeedLayoutManager : RecyclerView.LayoutManager() {
+class FeedLayoutManager : VegaLayoutManager() {
 
-    override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    
+    override fun canScrollHorizontally(): Boolean = false
+
+    override fun canScrollVertically(): Boolean = false
+
 }

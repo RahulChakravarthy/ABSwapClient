@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.hacks.radish.R
 import com.hacks.radish.fragments.FeedFragment
 import com.hacks.radish.util.lazyAndroid
+import com.hacks.radish.viewmodels.GalleryViewModel
 import com.hacks.radish.viewmodels.MainActivityViewModel
 import com.hacks.radish.viewmodels.MainViewModelFactory
 import com.ncapdevi.fragnav.FragNavController
@@ -19,10 +20,14 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: MainViewModelFactory
 
-    lateinit var fragmentManager: FragNavController
+    private lateinit var fragmentManager: FragNavController
 
-    private val mainActivityViewModel : MainActivityViewModel by lazyAndroid {
+    private val mainActivityViewModel: MainActivityViewModel by lazyAndroid {
         ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
+    }
+
+    private val galleryViewModel by lazyAndroid {
+        ViewModelProviders.of(this, viewModelFactory).get(GalleryViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +43,10 @@ class MainActivity : BaseActivity() {
         fragmentManager.initialize()
 
         //Give viewmodel ability to start activities with result
-        mainActivityViewModel.startActivityForResultListener = { intent, requestCode, bundle -> startActivityForResult(intent, requestCode, bundle) }
+        mainActivityViewModel.startActivityForResultListener =
+            { intent, requestCode, bundle -> startActivityForResult(intent, requestCode, bundle) }
         mainActivityViewModel.fragmentManager = fragmentManager
+        galleryViewModel.fragmentManager = fragmentManager
 
         setSupportActionBar(toolbar)
     }

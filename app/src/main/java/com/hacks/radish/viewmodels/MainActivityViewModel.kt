@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.MenuItem
-import android.view.View
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.hacks.radish.R
@@ -14,6 +13,7 @@ import com.hacks.radish.fragments.FeedFragment
 import com.hacks.radish.fragments.GalleryFragment
 import com.hacks.radish.fragments.PostFragment
 import com.hacks.radish.managers.MenuManager
+import com.hacks.radish.managers.VoteManager
 import com.hacks.radish.managers.SharedPreferencesManager as SPM
 import com.hacks.radish.repo.api.feed.FeedRepo
 import com.hacks.radish.repo.api.vote.VoteRepo
@@ -33,7 +33,8 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
                                                 private val menuManager: MenuManager,
                                                 private val feedRepo: FeedRepo,
                                                 private val voteRepo: VoteRepo,
-                                                private val spm: SPM
+                                                private val spm: SPM,
+                                                private val voteManager: VoteManager
 ) : BaseViewModel() {
 
     companion object {
@@ -41,7 +42,6 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
         const val UPLOAD_IMAGE_2_REQUEST_CODE = 11
     }
 
-    val dashboardFragments : ArrayList<BaseFragment> by lazyAndroid { ArrayList<BaseFragment>() }
     val image1UriLiveData by lazyAndroid {
         MediatorLiveData<Uri>().apply {
             value = Uri.EMPTY
@@ -53,17 +53,16 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
         }
     }
 
+    val voteLiveData by lazyAndroid {
+        MediatorLiveData<VoteRepo.Status>().apply {
+            addSource(voteManager.voteLiveData) {
+                this.value = it
+            }
+        }
+    }
+
     val feedListLiveData by lazyAndroid {
         MutableLiveData<List<ImagePairDO>>()
-    }
-
-    val voteLiveData by lazyAndroid {
-        MutableLiveData<VoteRepo.Status>()
-    }
-
-    init {
-        dashboardFragments.add(PostFragment())
-        dashboardFragments.add(FeedFragment())
     }
 
     fun fetchNewFeed(size : Int) {
@@ -113,7 +112,7 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
     private fun quickVoteImage(imagePairId : String, imageIndex : Int) {
         vms.launch {
             val voteDO = VoteDO(spm.getSessionId(),imagePairId, imageIndex)
-            voteLiveData.postValue(voteRepo.voteImagePair(voteDO))
+            voteManager.voteLiveData.postValue(voteRepo.voteImagePair(voteDO))
         }
     }
 
@@ -123,7 +122,9 @@ class MainActivityViewModel @Inject constructor(private val context : Context,
 
     fun onOptionsItemSelected(item: MenuItem?) : Boolean {
         when (item?.itemId) {
-            R.id.uploadMenuIcon -> { /* Do Upload Item logic */}
+            R.id.uploadMenuIcon -> {
+                fragmentManager.pushFragment(PostFragment())
+            }
         }
         return true
     }

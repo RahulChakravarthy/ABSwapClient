@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.hacks.radish.R
 import com.hacks.radish.activities.MainApplication
 import com.hacks.radish.adapters.FeedAdapter
+import com.hacks.radish.adapters.layoutmanagers.FeedLayoutManager
 import com.hacks.radish.repo.api.vote.VoteRepo
 import com.hacks.radish.repo.dataobject.ImagePairDO
 import com.hacks.radish.util.lazyAndroid
@@ -25,14 +24,14 @@ class FeedFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: MainViewModelFactory
 
-    val mainActivityViewModel: MainActivityViewModel by lazyAndroid {
+    private val mainActivityViewModel: MainActivityViewModel by lazyAndroid {
         ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
     }
 
-    var feedAdapter : FeedAdapter? = null
+    private var feedAdapter : FeedAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_feed, container, false)
+        return inflater.inflate(com.hacks.radish.R.layout.fragment_feed, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -58,23 +57,24 @@ class FeedFragment : BaseFragment() {
 
     private fun setupRecyclerView(list : List<ImagePairDO>) {
         feedRecyclerView.visibility = View.VISIBLE
-        feedRecyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        feedRecyclerView.layoutManager = FeedLayoutManager()
         feedRecyclerView.adapter = FeedAdapter(list, requireContext(), mainActivityViewModel.getFeedOnClickListener())
     }
 
     private fun initVoteListeners() {
+
     }
 
     private fun observeVotes() {
         mainActivityViewModel.voteLiveData.observe(this, Observer {
             when(it) {
                 VoteRepo.Status.VOTE_SUCCEED -> {
-                    feedRecyclerView.layoutManager?.apply {this as LinearLayoutManager
-                        scrollToPosition(findLastVisibleItemPosition() + 1)
+                    feedRecyclerView.layoutManager?.apply {this as FeedLayoutManager
+                        scrollToPosition(findFirstVisibleItemPosition() + 1)
                     }
                 }
                 VoteRepo.Status.VOTE_FAILED -> {
-                    Snackbar.make(requireView(), getString(R.string.voting_failed), Snackbar.LENGTH_SHORT)
+                    Snackbar.make(requireView(), getString(com.hacks.radish.R.string.voting_failed), Snackbar.LENGTH_SHORT)
                 }
                 else -> {}
             }
